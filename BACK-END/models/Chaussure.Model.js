@@ -7,13 +7,24 @@ const Chaussure = mongoose.Schema(
       ref: 'Marque',
       required: true
     },
-    marque: { 
+    nom: { 
       type: String, 
       required: true, 
     },
     modele:{
       type: String, 
       required: true, 
+    },
+    category: {
+      type: String,
+      required: true,
+      enum: ['shoes', 'backpack', 'ballon']
+    },
+    attributes: {
+      color: { type: [String]},
+      size: { type: [String] },
+      weight: { type: Number },
+      pied:{ type:[String], enum:['plat', 'creux', 'neutre']}
     },
     photo:{
       type: String, 
@@ -22,6 +33,11 @@ const Chaussure = mongoose.Schema(
     description:{
       type: String, 
       required: true, 
+    },
+    stock: {
+      type: Number,
+      required: true,
+      default:0,
     },
     prix:{
       type: Number, 

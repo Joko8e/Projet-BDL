@@ -23,3 +23,5 @@ const DetailMarque = () => {
         }
     }
 }
+
+export default DetailMarque
