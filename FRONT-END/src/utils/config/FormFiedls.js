@@ -1,23 +1,23 @@
 export const MARQUE_FIELDS = [
     {
-        label:"nom",
+        label:"Nom",
         type: "text",
-        nom: "nom",
+        name: "nom",
         id:"nom",
-        placeholder:"nom de la marque"
+        placeholder:"Nom de la marque"
     },
     {
-        label:"logo",
+        label:"Logo",
         type: "text",
         name: "logo",
         id:"logo",
-        placeholder:"logo"
+        placeholder:"Logo"
     },
     {
-        label:"description",
+        label:"Description",
         type: "text",
         name: "description",
         id:"description",
-        placeholder:"description"
+        placeholder:"Description"
     }
 ]

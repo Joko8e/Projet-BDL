@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import URL from "../../utils/constant/url";
 import { MARQUE_FIELDS } from "../../utils/config/FormFiedls";
+import { Modal } from "bootstrap";
 
 
 const Marque = () => {
@@ -15,6 +16,9 @@ const Marque = () => {
     });
 
     const [allMarque, setAllMarque] = useState([])
+
+    //state pour stocker l'id de la marque à supprimer
+    const [marqueToDelete, setMarqueToDelete] = useState(null);
 
     useEffect(() => {
         getAllMarque()
@@ -29,9 +33,21 @@ const Marque = () => {
         }
     }
 
-    const deleteMarque = async (id) => {
+    //fonction pour ouvrir le modal de confirmation de suppression
+    const confirmDelete = (_id) => {
+        setMarqueToDelete(_id);
+
+        // Ouvrir le modal
+        const modal = new Modal(
+            document.getElementById("deleteModal")
+        );
+        modal.show();
+    };
+
+    const deleteMarque = async (_id) => {
+        if(!marqueToDelete) return;
         try {
-            const { data, status } = await axios.delete(URL.DELETE_MARQUE + '/' + id)
+            const { data, status } = await axios.delete(URL.DELETE_MARQUE + '/' + _id)
             if (status === 200) {
                 console.log('marque supprimé');
                 getAllMarque();
@@ -39,7 +55,15 @@ const Marque = () => {
         } catch (error) {
             console.log(error.message);
         }
+
+        // Fermer le modal après la suppression
+        const modalElement = document.getElementById("deleteModal");
+        const modal = Modal.getInstance(modalElement);
+        modal.hide();
+        setMarqueToDelete(null);
     }
+
+    
 
     const handleChange = (event) => {
         const { name, value } = event.target
@@ -48,6 +72,8 @@ const Marque = () => {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
+        console.log("donnée envoyer au back", marque);
+        
         try {
             const { status } = await axios.post(URL.POST_MARQUE, marque)
             if (status === 201) {
@@ -63,9 +89,9 @@ const Marque = () => {
     return (
         <>
             <div className="table-responsive"
-        style={{ maxHeight: "500px", overflowY: "auto" }}>
+                style={{ maxHeight: "500px", overflowY: "auto" }}>
                 <table className="table table-striped table-bordered">
-                    <thead className="table-dark">
+                    <thead className="table-dark text-center align-middle sticky-top">
                         <tr>
                             <th>Nom</th>
                             <th>Logo</th>
@@ -88,7 +114,7 @@ const Marque = () => {
                                 <Link className="btn btn-warning me-2" to={{pathname:`update/${item._id}`}}>
                                     <i className="bi bi-pencil"></i>
                                 </Link>
-                                <button className="btn btn-danger me-2" onClick={() => deleteMarque(item._id)}>
+                                <button className="btn btn-danger me-2" onClick={() => confirmDelete(item._id)}>
                                     <i className="bi bi-trash"></i>
                                 </button>
                             </td>
@@ -108,6 +134,7 @@ const Marque = () => {
                         name={field.name}
                         id={field.id}
                         placeholder={field.placeholder}
+                        value={marque[field.name]}        
                         onChange={handleChange}
                         />
                     </div>
@@ -120,6 +147,39 @@ const Marque = () => {
                     </div>
                 </div>
             </form>
+
+            {/* Modal de confirmation de suppression */}
+            <div className="modal fade" id="deleteModal" tabIndex="-1">
+                <div className="modal-dialog modal-dialog-centered">
+                    <div className="modal-content">
+
+                        <div className="modal-header">
+                            <h5 className="modal-title">Confirmer la suppression</h5>
+                            <button type="button" className="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+
+                        <div className="modal-body">
+                            Êtes-vous sûr de vouloir supprimer cette marque ?
+                            <br />
+                            <strong>Cette action est irréversible.</strong>
+                        </div>
+
+                        <div className="modal-footer">
+                            <button
+                                type="button"
+                                className="btn btn-secondary"
+                                data-bs-dismiss="modal"
+                            >
+                                Annuler
+                            </button>
+
+                            <button type="button" className="btn btn-danger" onClick={() => deleteMarque(marqueToDelete)}>
+                                Supprimer
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </>
     )
 }

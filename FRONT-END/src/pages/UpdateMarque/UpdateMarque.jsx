@@ -33,7 +33,7 @@ const UpdateMarque = () => {
     const handleSubmit = async (event) => {
         event.preventDefault();
         try {
-            const { status } = await axios.post(URL.POST_MARQUE)
+            const { status } = await axios.put(URL.UPDATE_MARQUE + '/' + idMarque, marque)
             if (status === 201) console.log('Marque modifié!');
         } catch (error) {
             console.log(error.message);

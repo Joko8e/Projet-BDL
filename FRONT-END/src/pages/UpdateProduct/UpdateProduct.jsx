@@ -38,17 +38,30 @@ const UpdateProduct = () => {
         event.preventDefault();
         try {
             const {data, status} = await axios.put(URL.UPDATE_PRODUIT + '/' + idProduct, product)
-            if(status === 200) setAgence(data)
-            console.log("Info modifié");
-            
+            if (status === 200) {
+                console.log("Produit mis à jour avec succès");
+                setProduct(data)
+                getProductById()
+            } 
         } catch (error) {
             console.log(error.message)
         }
     }
 
     const handleChange = (event) => {
-        const{name, value} = event.target
-        setProduct(prevProduct => ({...prevProduct, [name]: value}))
+        const { name, value } = event.target
+        if (name === "color" || name === "size" || name === "weight" || name === "pied") {
+            setProduct(prevProduct => ({
+                ...prevProduct,
+                attribute: {
+                    ...prevProduct.attribute,
+                    [name]: value
+                }
+            }))
+        } else {
+            setProduct(prevProduct => ({...prevProduct, [name]: value}))
+        }
+        
     }
 
     return (
