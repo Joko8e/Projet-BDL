@@ -16,12 +16,20 @@ const DetailMarque = () => {
 
     const getMarqueById = async () => {
         try {
-            const { data, status } = await axios.get(URL.GET_MARQUE_BY_ID)
+            const { data, status } = await axios.get(URL.GET_MARQUE_BY_ID + '/' + idMarque)
             if(status === 200) setMarque(data)
         } catch (error) {
             console.log(error.message);
         }
     }
+
+    return (
+        <div>
+            <p>{marque.nom}</p>
+            <p>{marque.desciption}</p>
+            <img src={marque.logo} alt={marque.nom}/>
+        </div>
+    )
 }
 
 export default DetailMarque

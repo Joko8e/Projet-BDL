@@ -1,17 +1,17 @@
 export const MARQUE_FIELDS = [
     {
-        label:"text",
+        label:"nom",
         type: "text",
-        name: "name",
-        id:"name",
-        placeholder:"name"
+        nom: "nom",
+        id:"nom",
+        placeholder:"nom de la marque"
     },
     {
-        label:"photo",
+        label:"logo",
         type: "text",
-        name: "photo",
-        id:"photo",
-        placeholder:"photo"
+        name: "logo",
+        id:"logo",
+        placeholder:"logo"
     },
     {
         label:"description",

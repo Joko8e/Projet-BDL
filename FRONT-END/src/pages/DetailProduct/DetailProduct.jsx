@@ -9,7 +9,7 @@ const DetailProduct = () => {
     const params = useParams();
     const { idProduct } = params;
 
-    const { product, setProduct } = useState([])
+    const [product, setProduct] = useState([])
     
     useEffect(() => {
         getProductById()
@@ -26,12 +26,13 @@ const DetailProduct = () => {
 
     return (
         <div>
-            <p></p>
-            <p></p>
-            <p></p>
-            <p></p>
-            <p></p>
-            <img src={product.photo} alt={product.nom}/>
+            <p>{product.nom}</p>
+            <p>{product.category}</p>
+            <p>{product.modele}</p>
+            <img src={product.photo} alt={product.nom} width={200} />
+            <p>{product.description}</p>
+            <p>{product.prix}</p>
+            <p>{product.stock}</p>
         </div>
     )
 }

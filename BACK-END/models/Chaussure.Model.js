@@ -22,7 +22,7 @@ const Chaussure = mongoose.Schema(
     },
     attributes: {
       color: { type: [String]},
-      size: { type: [String] },
+      size: { type: [Number] },
       weight: { type: Number },
       pied:{ type:[String], enum:['plat', 'creux', 'neutre']}
     },
