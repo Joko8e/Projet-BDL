@@ -5,6 +5,7 @@ import axios from "axios";
 import URL from "../../utils/constant/url";
 import { MARQUE_FIELDS } from "../../utils/config/FormFiedls";
 import { Modal } from "bootstrap";
+import axiosInstance from "../../utils/axios/axiosInstance.js";
 
 
 const Marque = () => {
@@ -26,7 +27,7 @@ const Marque = () => {
 
     const getAllMarque = async () => {
         try {
-            const { data, status } = await axios.get(URL.GET_ALL_MARQUE)
+            const { data, status } = await axiosInstance.get(URL.GET_ALL_MARQUE)
             setAllMarque(data)
         } catch (error) {
             console.log(error.message);
@@ -47,7 +48,7 @@ const Marque = () => {
     const deleteMarque = async (_id) => {
         if(!marqueToDelete) return;
         try {
-            const { data, status } = await axios.delete(URL.DELETE_MARQUE + '/' + _id)
+            const { data, status } = await axiosInstance.delete(URL.DELETE_MARQUE + '/' + _id)
             if (status === 200) {
                 console.log('marque supprimé');
                 getAllMarque();
@@ -75,7 +76,7 @@ const Marque = () => {
         console.log("donnée envoyer au back", marque);
         
         try {
-            const { status } = await axios.post(URL.POST_MARQUE, marque)
+            const { status } = await axiosInstance.post(URL.POST_MARQUE, marque)
             if (status === 201) {
                 console.log('Marque créer!');
                 getAllMarque();

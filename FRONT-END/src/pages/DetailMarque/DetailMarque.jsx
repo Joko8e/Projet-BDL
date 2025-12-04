@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import URL from "../../utils/constant/url";
+import axiosInstance from "../../utils/axios/axiosInstance.js";
 
 const DetailMarque = () => {
 
@@ -16,7 +17,7 @@ const DetailMarque = () => {
 
     const getMarqueById = async () => {
         try {
-            const { data, status } = await axios.get(URL.GET_MARQUE_BY_ID + '/' + idMarque)
+            const { data, status } = await axiosInstance.get(URL.GET_MARQUE_BY_ID + '/' + idMarque)
             if(status === 200) setMarque(data)
         } catch (error) {
             console.log(error.message);

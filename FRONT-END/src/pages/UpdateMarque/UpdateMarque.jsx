@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import URL from "../../utils/constant/url";
+import axiosInstance from "../../utils/axios/axiosInstance.js";
 
 const UpdateMarque = () => {
     const params = useParams();
@@ -16,7 +17,7 @@ const UpdateMarque = () => {
 
     const getMarqueById = async () => {
         try {
-            const { data, status } = await axios.get(URL.GET_MARQUE_BY_ID + "/" + idMarque, marque)
+            const { data, status } = await axiosInstance.get(URL.GET_MARQUE_BY_ID + "/" + idMarque, marque)
             if (status === 200) {
                 setMarque(data)
             }
@@ -33,7 +34,7 @@ const UpdateMarque = () => {
     const handleSubmit = async (event) => {
         event.preventDefault();
         try {
-            const { status } = await axios.put(URL.UPDATE_MARQUE + '/' + idMarque, marque)
+            const { status } = await axiosInstance.put(URL.UPDATE_MARQUE + '/' + idMarque, marque)
             if (status === 201) console.log('Marque modifié!');
         } catch (error) {
             console.log(error.message);
