@@ -1,6 +1,6 @@
 const jwt = require("jsonwebtoken");
 const createError = require("../helpers/CreateError.js");
-const ENV = require("../config/env.js");
+const ENV = require("../config/Env.js");
 
 const authMiddleware = (req, res, next) => {
   // Récupère le jeton (token) JWT à partir des cookies de la requête
@@ -11,7 +11,7 @@ const authMiddleware = (req, res, next) => {
   if (!token) return next(createError(401, "Acces Denied"));
 
   // Vérifier la validité du jeton en utilisant jwt.verify
-  jwt.verify(token, ENV.JWT_SECRET, (err, user) => {
+  jwt.verify(token, ENV.JWT_SECRET, (err, auth) => {
     // si une erreur se produit lors de la vérification du jeton
     if (err) {
       // Renvoie une erreur 403 (interdit)

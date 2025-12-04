@@ -1,5 +1,6 @@
 const createError = require("../helpers/CreateError.js");
 const MarqueModel = require("../models/Marque.Model");
+const AuthModel = require("../models/User.Model.js");
 
 /**
  * Méthode pour créer un nouvel élément.
@@ -80,9 +81,14 @@ const getById = async (req, res, next) => {
  */
 const deleteById = async (req, res, next) => {
   try {
+    console.log(req.auth);
+    const auth = await AuthModel.findById(req.auth.id)
+    if(auth.role === "admin"){
     const deleteMarque = await MarqueModel.findByIdAndDelete(req.params.id)
     if(!deleteById) return next(createError(404, "Marque not found"))
-    res.status(200).json("Marque supprimé")
+      res.status(200).json("Marque supprimé")
+    }
+    res.status(403).json("Action non autorisée")
   } catch (error) {
      next(createError(error.status || 500, error.message, error.details));
   }
