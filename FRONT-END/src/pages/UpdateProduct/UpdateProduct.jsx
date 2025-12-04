@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import URL from "../../utils/constant/url";
 import { useParams } from "react-router-dom";
+import axiosInstance from "../../utils/axios/axiosInstance.js";
 
 const UpdateProduct = () => {
 
@@ -18,7 +19,7 @@ const UpdateProduct = () => {
 
     const getProductById = async () => {
         try {
-            const { data, status } = await axios.get(URL.GET_PRODUIT_BY_ID + '/' + idProduct)
+            const { data, status } = await axiosInstance.get(URL.GET_PRODUIT_BY_ID + '/' + idProduct)
             if (status === 200) setProduct(data)
         } catch (error) {
             console.log(error.message);
@@ -27,7 +28,7 @@ const UpdateProduct = () => {
 
     const getAllMarque = async () => {
         try {
-            const { data, status } = await axios.get(URL.GET_ALL_MARQUE)
+            const { data, status } = await axiosInstance.get(URL.GET_ALL_MARQUE)
             if (status === 200) setAllMarque(data)
         } catch (error) {
             console.log(error.message);
@@ -37,7 +38,7 @@ const UpdateProduct = () => {
     const handleSubmit = async (event) => {
         event.preventDefault();
         try {
-            const {data, status} = await axios.put(URL.UPDATE_PRODUIT + '/' + idProduct, product)
+            const {data, status} = await axiosInstance.put(URL.UPDATE_PRODUIT + '/' + idProduct, product)
             if (status === 200) {
                 console.log("Produit mis à jour avec succès");
                 setProduct(data)

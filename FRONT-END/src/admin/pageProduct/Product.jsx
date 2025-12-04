@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { Modal } from "bootstrap";
 import URL from "../../utils/constant/url";
+import axiosInstance from "../../utils/axios/axiosInstance";
 
 const Product = () => {
     const [product, setProduct] = useState({
@@ -34,7 +35,7 @@ const Product = () => {
 
     const getAllProduct = async () => {
         try {
-            const { data, status } = await axios.get(URL.GET_ALL_PRODUIT)
+            const { data, status } = await axiosInstance.get(URL.GET_ALL_PRODUIT)
             if (status === 200) setAllProduct(data)
         } catch (error) {
             console.log(error.message);
@@ -43,7 +44,7 @@ const Product = () => {
 
     const getAllMarque = async () => {
         try {
-            const { data, status } = await axios.get(URL.GET_ALL_MARQUE)
+            const { data, status } = await axiosInstance.get(URL.GET_ALL_MARQUE)
             if(status === 200) setAllMarque(data)
         } catch (error) {
             console.log(error.message);
@@ -64,7 +65,7 @@ const Product = () => {
     const deleteProduct = async (_id) => {
         if(!productToDelete) return;
         try {
-            const { status } = await axios.delete(URL.DELETE_PRODUIT + '/' + _id)
+            const { status } = await axiosInstance.delete(URL.DELETE_PRODUIT + '/' + _id)
             if (status === 200) {
                 console.log('produit supprimer');
                 getAllProduct()
@@ -83,7 +84,7 @@ const Product = () => {
     const handleSubmit = async (event) => {
         event.preventDefault();
         try {
-            const { status } = await axios.post(URL.POST_PRODUIT, product)
+            const { status } = await axiosInstance.post(URL.POST_PRODUIT, product)
             if (status === 201) {
                 console.log('produit ajouté');
                 getAllProduct()

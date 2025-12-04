@@ -3,6 +3,7 @@ import { useState } from 'react'
 import { useEffect } from 'react'
 import axios from 'axios'
 import URL from '../../utils/constant/url'
+import axiosInstance from '../../utils/axios/axiosInstance.js'
 
 
 const Home = () => {
@@ -15,7 +16,7 @@ const Home = () => {
 
     const getAllMarque = async () => {
         try {
-            const { data, status } = await axios.get(URL.GET_ALL_MARQUE)
+            const { data, status } = await axiosInstance.get(URL.GET_ALL_MARQUE)
             if (status === 200) {
                 setMarque(data)
             }

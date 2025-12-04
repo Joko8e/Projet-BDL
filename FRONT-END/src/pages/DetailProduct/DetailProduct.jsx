@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import URL from "../../utils/constant/url";
+import axiosInstance from "../../utils/axios/axiosInstance.js";
 
 const DetailProduct = () => {
 
@@ -17,7 +18,7 @@ const DetailProduct = () => {
 
     const getProductById = async () => {
         try {
-            const { data, status } = await axios.get(URL.GET_PRODUIT_BY_ID + '/' + idProduct)
+            const { data, status } = await axiosInstance.get(URL.GET_PRODUIT_BY_ID + '/' + idProduct)
             if(status === 200) setProduct(data)
         } catch (error) {
             console.log(error.message);

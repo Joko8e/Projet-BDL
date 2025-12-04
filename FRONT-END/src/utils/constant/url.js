@@ -1,19 +1,19 @@
 const URL = {
     
-    AUTH_SIGN: '',
-    AUTH_REGISTER:'',
+    AUTH_SIGN: '/api/auth/login',
+    AUTH_REGISTER:'/api/auth/register',
 
-    POST_MARQUE: 'http://localhost:8000/api/marque/post',
-    GET_ALL_MARQUE: 'http://localhost:8000/api/marque/get',
-    GET_MARQUE_BY_ID: 'http://localhost:8000/api/marque/get',
-    UPDATE_MARQUE: 'http://localhost:8000/api/marque/put',
-    DELETE_MARQUE: 'http://localhost:8000/api/marque/delete',
+    POST_MARQUE: '/api/marque/post',
+    GET_ALL_MARQUE: '/api/marque/get',
+    GET_MARQUE_BY_ID: '/api/marque/get',
+    UPDATE_MARQUE: '/api/marque/put',
+    DELETE_MARQUE: '/api/marque/delete',
     
-    POST_PRODUIT: 'http://localhost:8000/api/chaussure/post',
-    GET_ALL_PRODUIT: 'http://localhost:8000/api/chaussure/get',
-    GET_PRODUIT_BY_ID: 'http://localhost:8000/api/chaussure/get',
-    UPDATE_PRODUIT: 'http://localhost:8000/api/chaussure/put',
-    DELETE_PRODUIT:'http://localhost:8000/api/chaussure/delete',
+    POST_PRODUIT: '/api/chaussure/post',
+    GET_ALL_PRODUIT: '/api/chaussure/get',
+    GET_PRODUIT_BY_ID: '/api/chaussure/get',
+    UPDATE_PRODUIT: '/api/chaussure/put',
+    DELETE_PRODUIT:'/api/chaussure/delete',
 }
 
 export default URL;
