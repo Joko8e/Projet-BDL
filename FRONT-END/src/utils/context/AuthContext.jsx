@@ -25,13 +25,12 @@ export const AuthProvider = ({ children }) => {
         } catch (error) {
             console.log(error.message);
         }
+    }
 
     return (
         <AuthContext.Provider value={{login, user}}>
             {children}
         </AuthContext.Provider>
         )
-    }
+    
 }
-
-export default AuthProvider;
