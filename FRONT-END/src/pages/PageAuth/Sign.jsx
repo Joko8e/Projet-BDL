@@ -1,17 +1,19 @@
-import React, { use, useState, useContext } from "react";
+import React, { useState, useContext } from "react";
 import { AuthContext } from "../../utils/context/AuthContext";
+import { Link } from "react-router-dom";
 
 const Sign = () => {
     const {login}= useContext(AuthContext);
-    const [user, setUser] = useState({})
+    const [formData, setFormData] = useState({email:"", password:""});
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-        setUser((user) => ({...user, [name]: value}));
+        setFormData((user) => ({...user, [name]: value}));
     } 
 
-    const handleSubmit = () => {
-        login(user);
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        await login(formData);
     }
 
     return (
@@ -24,6 +26,10 @@ const Sign = () => {
                 <input type="password" name="password" onChange={handleChange} />
                 <button type="submit">Sign In</button>
             </form>
+            <div>
+                <p>Pas encore insrit ? cliquer ici</p>
+                <Link to='/register'>S'enregistrer</Link>
+            </div>
         </div>
     )
 }

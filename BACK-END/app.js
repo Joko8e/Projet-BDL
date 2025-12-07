@@ -12,6 +12,8 @@ const errorMiddleware = require("./middlewares/ErrorMiddleware.js");
 const authRouter = require("./router/Auth.Router.js");
 const MarqueRouter = require("./router/Marque.Router.js");
 const ChaussureRouter = require("./router/Chaussures.Routers.js");
+const UserRouter = require("./router/User.Router.js");
+const CommandeRouter = require("./router/Commande.Router.js");
 
 // CONNEXION MONGO
 connectDB(ENV.MONGO_URI, ENV.DB_NAME);
@@ -45,6 +47,9 @@ app.use(
 app.use("/api/auth", authRouter);
 app.use("/api/marque", MarqueRouter);
 app.use("/api/chaussure", ChaussureRouter);
+app.use("/api/user", UserRouter);
+app.use("/api/commande", CommandeRouter);
+
 
 // Middleware d'erreurs (toujours en dernier 🚨)
 app.use(errorMiddleware);

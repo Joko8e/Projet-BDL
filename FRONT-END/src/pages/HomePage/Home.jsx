@@ -1,7 +1,7 @@
 import React from 'react'
 import { useState } from 'react'
 import { useEffect } from 'react'
-import axios from 'axios'
+import { Link } from 'react-router-dom'
 import URL from '../../utils/constant/url'
 import axiosInstance from '../../utils/axios/axiosInstance.js'
 
@@ -28,6 +28,7 @@ const Home = () => {
 
     return (
         <>
+
             <h1>Test</h1>
 
             <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Magnam exercitationem minima dolore reiciendis debitis! Tenetur maxime numquam dicta perspiciatis tempora sunt dolorem saepe cumque. Quasi non similique possimus ipsum harum?</p>
@@ -39,8 +40,8 @@ const Home = () => {
                     <p>{item.description}</p>
                 </div>
             ))}
-        
         </>
+
     )
 }
 

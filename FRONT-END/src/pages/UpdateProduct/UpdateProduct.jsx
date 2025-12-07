@@ -1,6 +1,5 @@
 import React from "react";
 import { useEffect, useState } from "react";
-import axios from "axios";
 import URL from "../../utils/constant/url";
 import { useParams } from "react-router-dom";
 import axiosInstance from "../../utils/axios/axiosInstance.js";
@@ -114,7 +113,9 @@ const UpdateProduct = () => {
                     ))}
                 </select>
 
-                <button>Envoyer</button>
+                <button type="submit" className="btn btn-primary">
+                    Update
+                </button>
             </form>
         </>
     )

@@ -1,5 +1,6 @@
 const createError = require("../helpers/CreateError.js");
 const ChaussureModel = require("../models/Chaussure.Model.js");
+const AuthModel = require("../models/User.Model.js");
 
 const post = async (req,res, next) => {
     try {
@@ -32,9 +33,13 @@ const getShoesByID = async (req, res, next) => {
 
 const deleteShoesById = async (req, res, next) => {
     try {
-        const deleteShoes = await ChaussureModel.findByIdAndDelete(req.params.id);
-        if(!deleteShoesById) return next(createError(404, "Not found"))
-        res.status(200).json("produit supprimé");
+        const auth = await AuthModel.findById(req.auth.id)
+        if (auth.role === "admin") {
+            const deleteProduct = await ChaussureModel.findByIdAndDelete(req.params.id);
+            if(!deleteProduct) return next(createError(404, "Not found"))
+            res.status(200).json("produit supprimé")
+        }
+        res.status(403).json("Action non autorisée")
     } catch (error) {
         next(createError(error.status || 500, error.message, error.details));
     }
@@ -42,9 +47,13 @@ const deleteShoesById = async (req, res, next) => {
 
 const updateShoesById = async ( req, res, next) => {
     try {
-        const updatedShoes = await ChaussureModel.findByIdAndUpdate(req.params.id, req.body, {new:true});
-        if(!updateShoesById) return next(createError(404, "Not found"))
-        res.status(200).json("produit modifié")
+        const auth = await AuthModel.findById(req.auth.id)
+        if (auth.role === "admin") {
+            const updateProduct = await ChaussureModel.findByIdAndUpdate(req.params.id, req.body, {new:true});
+            if(!updateProduct) return next(createError(404, "Not found"))
+            res.status(200).json("produit modifié")
+        }
+        res.status(403).json("Action non autorisée")
     } catch (error) {
         next(createError(error.status || 500, error.message, error.details));
     }

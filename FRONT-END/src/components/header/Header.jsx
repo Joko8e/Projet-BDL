@@ -1,20 +1,66 @@
 import React from "react";
-import { Outlet } from "react-router-dom";
+import { useContext } from "react";
+import { AuthContext } from "../../utils/context/AuthContext";
 import { Link } from "react-router-dom";
+import HEADER_LINK from "../../utils/config/LinkHeader";
 
 const Header = () => {
 
+    const { user, logOut } = useContext(AuthContext);
+    
+    const isAuthenticated = user;
+    const role = user?.role;
+
+    const visibleLinks = HEADER_LINK.filter((link) => {
+        if (link.auth) return true; // afiche tous les liens publics
+        if (!isAuthenticated) return false; // si pas connecté, pas d'accès
+        if(link.auth === role) return true; // si le rôle correspond, accès accordé
+        return false; // sinon pas d'accès
+    })
+
     return (
         <header>
-            <nav>
-                <ul>
-                    <li>
-                        <Link to='/'>Home</Link>
-                    </li>
-                    <li>
-                        <Link to='/dashboard'>Dashboard</Link>
-                    </li>
-                </ul>
+            <nav className="navbar navbar-expand-lg navbar-light bg-light p-2">
+                <div className="container-fluid">
+                    <Link to='/'>Home</Link> 
+                </div>
+                <button
+                    className="navbar-toggler"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#navbarNavDropdown"
+                    aria-controls="navbarNavDropdown"
+                    aria-expanded="false"
+                    aria-label="Toggle navigation"
+                >
+                    <span className="navbar-toggler-icon"></span>
+                </button>
+                <div className="collapse navbar-collapse" id="navbarNavDropdown">
+                    <ul className="navbar-nav mx-auto">
+                        {visibleLinks.map((link, index) => (
+                            <li className="nav-item" key={index}>
+                                <Link className="nav-link" to={link.path}>
+                                    {link.label}
+                                </Link>
+                            </li>
+                        ))} 
+                    </ul>
+
+                    {/* bouton de connexion / deconnexion */}
+                    <ul className="navbar-nav ms-auto">
+                        {isAuthenticated ? (
+                            <li className="nav-item">
+                                <button onClick={logOut} className="btn btn-outline-danger">Déconnexion</button>
+                            </li>
+                        ) : (
+                            <li className="nav-item">
+                                    <Link to='sign' className="btn btn-outline-primary">
+                                        Connexion
+                                    </Link>
+                            </li>
+                        )}
+                    </ul>
+                </div>
             </nav>
         </header>
     )
