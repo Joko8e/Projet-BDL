@@ -24,8 +24,6 @@ const Register = () => {
 
     return (
         <div className="container mt-5">
-            <div className="row shadow rounded overflow-hidden">
-                <div className="col-md-6 bg-light p-5">
                     <h1 className="text-center mb-4">Register</h1>
                     <form onSubmit={handleSubmit}>
                         {REGISTER_FIELDS.map((field, index) => (
@@ -50,8 +48,6 @@ const Register = () => {
                         Déjà un compte ?
                         <Link to="/sign">Sign In</Link>
                     </p>
-                </div>
-            </div>
         </div>
     )
 }

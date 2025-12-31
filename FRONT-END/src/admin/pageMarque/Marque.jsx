@@ -128,7 +128,7 @@ const Marque = () => {
             <form onSubmit={handleSubmit} className="container mt-4">
                 <div className="row">
                     {MARQUE_FIELDS.map(field => (
-                    <div key={field.id}>
+                    <div key={field.id} className="col-12 col-md-6">
                         <label className="form-label " htmlFor={field.id}>{field.label} </label>
                         <input className="form-control d-flex fw-bold" 
                         type={field.type}

@@ -61,14 +61,18 @@ function App() {
       </Route>
         
         {/* Routes publiques (non accessible si connecté) */}
-      <Route element={<PublicRoute/>}>
-          <Route path='sign' element={<Sign/>}/>
-          <Route path='register' element={<Register/>}/>
+      <Route element={<PublicRoute />}>
+        <Route path='/' element={<Template/>}>  
+            <Route path='sign' element={<Sign/>}/>
+            <Route path='register' element={<Register />} />
+        </Route>
       </Route>
         
         {/* Route privé, accessible uniquement aux utilisateurs connectés */}
-      <Route element={<PrivateRoute/>}>
-        <Route  path='historique' element={<Historique/>} />
+        <Route element={<PrivateRoute />}>
+          <Route path='/' element={<Template/>}>
+            <Route path='historique' element={<Historique />} />
+          </Route>
       </Route>
       
       {/* Route Admin */}

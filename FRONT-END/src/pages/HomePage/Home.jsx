@@ -29,7 +29,7 @@ const Home = () => {
     return (
         <>
 
-            <h1>Test</h1>
+            <h1>Ball Don't Lie</h1>
 
             <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Magnam exercitationem minima dolore reiciendis debitis! Tenetur maxime numquam dicta perspiciatis tempora sunt dolorem saepe cumque. Quasi non similique possimus ipsum harum?</p>
 
