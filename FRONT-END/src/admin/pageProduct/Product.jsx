@@ -5,6 +5,7 @@ import axios from "axios";
 import { Modal } from "bootstrap";
 import URL from "../../utils/constant/url";
 import axiosInstance from "../../utils/axios/axiosInstance";
+import { PRODUCT_FIELDS } from "../../utils/config/FormFiedls";
 
 const Product = () => {
     const [product, setProduct] = useState({
@@ -63,6 +64,8 @@ const Product = () => {
         };
 
     const deleteProduct = async (_id) => {
+        console.log(_id);
+        
         if(!productToDelete) return;
         try {
             const { status } = await axiosInstance.delete(URL.DELETE_PRODUIT + '/' + _id)
@@ -181,63 +184,61 @@ const Product = () => {
 
 
             <h1>Ajouter un Produit</h1>
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit} className="container mt-4">
                 <div className="row">
-                    <label htmlFor="nom" className="form-label">Nom</label>
-                    <input className="form-control" id='nom' type="text" name='nom' value={product.nom} onChange={handleChange}/>
+                    {PRODUCT_FIELDS.map((field, index) => (
+                        <div className="mb-3 col-md-6" key={index}>
+                            <label htmlFor={field.id} className="form-label">{field.label}</label>
+                            {field.type === "select" ? (
+                                <select
+                                    className="form-select"
+                                    id={field.id}
+                                    name={field.name}
+                                    value={product[field.name]}
+                                    onChange={handleChange}
+                                    required
+                                >
+                                    <option value="">{field.placeholder}</option>
+                                    <option value={field.option1}>{field.option1}</option>
+                                    <option value={field.option2}>{field.option2}</option>
+                                    <option value={field.option3}>{field.option3}</option>
+                                </select>
+                            ) : (
+                                <input
+                                    type={field.type}
+                                    className="form-control"
+                                    id={field.id}
+                                    name={field.name}
+                                    placeholder={field.placeholder}
+                                    value={
+                                        field.name in product.attribute ? product.attribute[field.name] : product[field.name]
+                                    }
+                                    onChange={handleChange}
+                                    required
+                                />
+                            )}
+                        </div>
+                    ))}
 
-                    <label htmlFor="category" className="form-label">Category</label>
-                    <select className="form-control" name="category" id="category" value={product.category} onChange={handleChange}>
-                        <option value="">-- Choisir --</option>
-                        <option value="shoes">Shoes</option>
-                        <option value="backpack">Backpack</option>
-                        <option value="ballon">Ballon</option>
-                    </select>
+                    <div className="mb-3 col-md-6">
+                        <label htmlFor="id_marque" className="form-label">Marque</label>
+                        <select
+                            className="form-select"
+                            id="id_marque"
+                            name="id_marque"
+                            value={product.id_marque}
+                            onChange={handleChange}
+                            required
+                        >
+                            <option value="">Sélectionner une marque</option>
+                            {allMarque.map((marque) => (
+                                <option key={marque._id} value={marque._id}>{marque.nom}</option>
+                            ))}
+                        </select>
+                    </div>
 
-                    <label htmlFor="color" className="form-label">Couleur</label>
-                    <input className="form-control" id='color' type="text" name='color' value={product.attribute.color} onChange={handleChange}/>
-
-                    <label htmlFor="size" className="form-label">Pointure</label>
-                    <input className="form-control" id='size' type="number" name='size' value={product.attribute.size} onChange={handleChange}/>
-
-                    <label htmlFor="weight" className="form-label">Poids</label>
-                    <input className="form-control" id='weight' type="number" name='weight' value={product.attribute.weight} onChange={handleChange} />
-                    
-                    <label htmlFor="pied" className="form-label">Type de Pied</label>
-                    <select className="form-select" name="pied" id="pied" value={product.attribute.pied} onChange={handleChange}>
-                        <option value="">-- Choisir --</option>
-                        <option value="plat">Plat</option>
-                        <option value="creux">Creux</option>
-                        <option value="neutre">Neutre</option>
-                    </select>
-
-                    <label htmlFor="modele" className="form-label">Modèle</label>
-                    <input className="form-control" id='modele' type="text" name='modele' value={product.modele} onChange={handleChange} />
-
-                    <label htmlFor="photo" className="form-label">Photo</label>
-                    <input className="form-control" id='photo' type="text" name='photo' value={product.photo} onChange={handleChange} />
-                    
-                    <label htmlFor="description" className="form-label">Description</label>
-                    <textarea className="form-control" id='description' name='description' value={product.description} onChange={handleChange} />
-
-                    <label htmlFor="stock" className="form-label">Stock</label>
-                    <input className="form-control" id='stock' type="number" name='stock' value={product.stock} onChange={handleChange} />
-
-                    <label htmlFor="prix" className="form-label">Prix</label>
-                    <input className="form-control" id='prix' type="number" name='prix' value={product.prix} onChange={handleChange} />
-
-                    <label htmlFor="id_marque" className="form-label">Marque</label>
-                    <select className="form-select" id='id_marque' type="text" name='id_marque' value={product.id_marque} onChange={handleChange} >
-                        <option value="">--Choisir une marque--</option>
-                        {allMarque.map(info => (
-                            <option key={info._id} value={info._id}>{info.nom}</option>
-                        ))}
-                    </select>
-
-                     <div className="col-12 text-center">
-                        <button type="submit" className="btn btn-primary">
-                            Enregistrer
-                        </button>
+                    <div className="mb-3 col-md-12">
+                        <button type="submit" className="btn btn-primary">Ajouter le produit</button>
                     </div>
                 </div>
             </form>

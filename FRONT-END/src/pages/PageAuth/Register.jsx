@@ -24,11 +24,12 @@ const Register = () => {
 
     return (
         <div className="container mt-5">
+            <div className="row shadow rounded overflow-hidden">
                     <h1 className="text-center mb-4">Register</h1>
                     <form onSubmit={handleSubmit}>
                         {REGISTER_FIELDS.map((field, index) => (
                             <div className="input-group flex-nowrap mb-3" key={index}>
-                                <span className="input-group-text mb-3">
+                                <span>
                                     <i className={field.icon}></i>
                                 </span>
                                 <input
@@ -48,6 +49,7 @@ const Register = () => {
                         Déjà un compte ?
                         <Link to="/sign">Sign In</Link>
                     </p>
+            </div>
         </div>
     )
 }

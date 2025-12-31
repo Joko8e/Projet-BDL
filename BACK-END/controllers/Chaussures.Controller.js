@@ -34,12 +34,13 @@ const getShoesByID = async (req, res, next) => {
 const deleteShoesById = async (req, res, next) => {
     try {
         const auth = await AuthModel.findById(req.auth.id)
+        
         if (auth.role === "admin") {
             const deleteProduct = await ChaussureModel.findByIdAndDelete(req.params.id);
             if(!deleteProduct) return next(createError(404, "Not found"))
-            res.status(200).json("produit supprimé")
+            return res.status(200).json("produit supprimé")
         }
-        res.status(403).json("Action non autorisée")
+        return res.status(403).json("Action non autorisée")
     } catch (error) {
         next(createError(error.status || 500, error.message, error.details));
     }
@@ -51,9 +52,9 @@ const updateShoesById = async ( req, res, next) => {
         if (auth.role === "admin") {
             const updateProduct = await ChaussureModel.findByIdAndUpdate(req.params.id, req.body, {new:true});
             if(!updateProduct) return next(createError(404, "Not found"))
-            res.status(200).json("produit modifié")
+            return res.status(200).json("produit modifié")
         }
-        res.status(403).json("Action non autorisée")
+        return res.status(403).json("Action non autorisée")
     } catch (error) {
         next(createError(error.status || 500, error.message, error.details));
     }

@@ -19,7 +19,7 @@ import Contact from './pages/PageContact/Contact';
 import Historique from './pages/PageHistorique/Historique';
 import CGV from './pages/PageFooter/CGV';
 import MentionsLegale from './pages/PageFooter/MentionsLegales';
-
+import Detail from './pages/DetailProduct/Detail';
 
 //// ADMIN
 import Dashboard from './admin/pageDashboard/Dashboard';
@@ -58,21 +58,22 @@ function App() {
           <Route path='contact' element={<Contact />} />
           <Route path='cgv' element={<CGV />} />
           <Route path='mentionLeg' element={<MentionsLegale/>}/>
+          <Route path='detail/:idProduct' element={<Detail />} />
       </Route>
         
         {/* Routes publiques (non accessible si connecté) */}
-      <Route element={<PublicRoute />}>
-        <Route path='/' element={<Template/>}>  
-            <Route path='sign' element={<Sign/>}/>
-            <Route path='register' element={<Register />} />
+      <Route element={<PublicRoute/>}>
+        <Route path='/' element={<Template/>}>
+          <Route path='sign' element={<Sign/>}/>
+          <Route path='register' element={<Register/>}/>
         </Route>
       </Route>
         
         {/* Route privé, accessible uniquement aux utilisateurs connectés */}
-        <Route element={<PrivateRoute />}>
-          <Route path='/' element={<Template/>}>
-            <Route path='historique' element={<Historique />} />
-          </Route>
+      <Route element={<PrivateRoute/>}>
+        <Route path='/' element={<Template/>}>
+          <Route  path='historique' element={<Historique/>} />
+        </Route>
       </Route>
       
       {/* Route Admin */}

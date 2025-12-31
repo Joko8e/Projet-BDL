@@ -6,10 +6,13 @@ import HEADER_LINK from "../../utils/config/LinkHeader";
 
 const Header = () => {
 
-    const { user, logOut } = useContext(AuthContext);
-    
+    const { user, logout } = useContext(AuthContext);
+console.log("tt",user);
+
     const isAuthenticated = user;
     const role = user?.role;
+    console.log("is auth", isAuthenticated);
+    
 
     const visibleLinks = HEADER_LINK.filter((link) => {
         if (link.auth) return true; // afiche tous les liens publics
@@ -19,8 +22,8 @@ const Header = () => {
     })
 
     return (
-        <header>
-            <nav className="navbar navbar-expand-lg navbar-light bg-light p-2">
+        <header className="container-fluid" style={{backgroundColor:"#552583"}}>
+            <nav className="navbar navbar-expand-lg navbar-light p-2">
                 <div className="container-fluid">
                     <Link to='/'>Home</Link> 
                 </div>
@@ -50,7 +53,7 @@ const Header = () => {
                     <ul className="navbar-nav ms-auto">
                         {isAuthenticated ? (
                             <li className="nav-item">
-                                <button onClick={logOut} className="btn btn-outline-danger">Déconnexion</button>
+                                <button onClick={logout} className="btn btn-outline-danger">Déconnexion</button>
                             </li>
                         ) : (
                             <li className="nav-item">

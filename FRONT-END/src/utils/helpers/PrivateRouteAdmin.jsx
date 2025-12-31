@@ -9,7 +9,7 @@ const PrivateRouteAdmin = () => {
     
     return (
         // Si l'utilisateur est un administrateur, rendre les composants enfants, sinon rediriger vers la page d'accueil
-        isAdmin ? <Navigate to="/" /> : <Outlet />
+        isAdmin ? <Outlet /> : <Navigate to="/" />
     )
 }
 

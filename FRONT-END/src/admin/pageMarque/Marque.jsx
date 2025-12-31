@@ -73,7 +73,6 @@ const Marque = () => {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        console.log("donnée envoyer au back", marque);
         
         try {
             const { status } = await axiosInstance.post(URL.POST_MARQUE, marque)
@@ -129,7 +128,7 @@ const Marque = () => {
                 <div className="row">
                     {MARQUE_FIELDS.map(field => (
                     <div key={field.id} className="col-12 col-md-6">
-                        <label className="form-label " htmlFor={field.id}>{field.label} </label>
+                        <label className="form-label" htmlFor={field.id}>{field.label} </label>
                         <input className="form-control d-flex fw-bold" 
                         type={field.type}
                         name={field.name}

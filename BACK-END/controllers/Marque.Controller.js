@@ -83,11 +83,11 @@ const deleteById = async (req, res, next) => {
   try {
     const auth = await AuthModel.findById(req.auth.id)
     if(auth.role === "admin"){
-     await MarqueModel.findByIdAndDelete(req.params.id)
-    if(!deleteById) return next(createError(404, "Marque not found"))
-      res.status(200).json("Marque supprimé")
+     const deletedMarque = await MarqueModel.findByIdAndDelete(req.params.id)
+    if(!deletedMarque) return next(createError(404, "Marque not found"))
+      return res.status(200).json("Marque supprimé")
     }
-    res.status(403).json("Action non autorisée")
+    return res.status(403).json("Action non autorisée")
   } catch (error) {
      next(createError(error.status || 500, error.message, error.details));
   }
@@ -110,12 +110,12 @@ const deleteById = async (req, res, next) => {
 const updateById = async (req, res, next) => {
   try {
     const auth = await AuthModel.findById(req.auth.id)
-    if (auth.role !== "admin") { 
-    await MarqueModel.findByIdAndUpdate(req.params.id, req.body, {new:true})
-    if(!updateById) return next(createError(404, "Marque Not Found"))
-    res.status(200).json("Marque Modifié")
+    if (auth.role === "admin") { 
+    const updatedMarque = await MarqueModel.findByIdAndUpdate(req.params.id, req.body, {new:true})
+    if(!updatedMarque) return next(createError(404, "Marque Not Found"))
+    return res.status(200).json("Marque Modifié")
     } 
-    res.status(403).json("Action non autorisée")
+    return res.status(403).json("Action non autorisée")
   } catch (error) {
     next(createError(error.status || 500, error.message, error.details)); 
   }

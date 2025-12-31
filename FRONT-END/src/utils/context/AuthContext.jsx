@@ -33,7 +33,8 @@ export const AuthProvider = ({ children }) => {
                 localStorage.setItem("auth", JSON.stringify(data));
 
                 // Mettre à jour le state avec les informations de l'utilisateur connecté
-                setUser(data.user);
+                setUser(data);
+                
 
                 // Rediriger vers la page d'accueil
                 navigate(`/`);
@@ -72,7 +73,7 @@ export const AuthProvider = ({ children }) => {
         }
     }
 
-    const logOut = () => {
+    const logout = () => {
         setIsLoading(true);
         setUser(null); // Réinitialiser l'état de l'utilisateur à null
 
@@ -83,7 +84,7 @@ export const AuthProvider = ({ children }) => {
     }
 
     return (
-        <AuthContext.Provider value={{login, user, logOut, register}}>
+        <AuthContext.Provider value={{login, user, logout, register, isLoading}}>
             {children}
         </AuthContext.Provider>
         )

@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import URL from "../../utils/constant/url";
 import axiosInstance from "../../utils/axios/axiosInstance.js";
+import { MARQUE_FIELDS } from "../../utils/config/FormFiedls.js";
 
 const UpdateMarque = () => {
     const params = useParams();
@@ -44,17 +45,24 @@ const UpdateMarque = () => {
     return (
         <>
             <h1>Update Marque</h1>
-            <form onSubmit={handleSubmit}>
-            <label className="form-label" htmlFor="nom">Nom</label>
-            <input className="form-control" id='name' type="text" name='nom' value={marque.nom || ""} onChange={handleChange}/>
-
-            <label className="form-label"htmlFor="description">Description</label>
-            <textarea className="form-control" id='description' name='description' value={marque.description || ""} onChange={handleChange}/>
-
-            <label className="form-label" htmlFor="logo">Logo</label>
-            <input className="form-control" id='logo' type="text" name='logo' value={marque.logo || ""} onChange={handleChange}/>
-
-            <button>Envoyer</button>
+            <form onSubmit={handleSubmit} className="container mt-4">
+                <div className="row">
+                    {MARQUE_FIELDS.map((field) => 
+                        <div key={field.id} className="mb-3 col-md-6">
+                            <label htmlFor={field.id} className="form-label">{field.label}</label>
+                            <input
+                                type={field.type}
+                                className="form-control"
+                                id={field.id}
+                                name={field.name}
+                                placeholder={field.placeholder}
+                                value={marque[field.name] || ''}
+                                onChange={handleChange}
+                            />
+                        </div>
+                    )}
+                </div>
+                <button type="submit" className="btn btn-primary">Mettre à jour la marque</button>
             </form>
         </>
     )

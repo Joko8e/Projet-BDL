@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import URL from "../../utils/constant/url";
 import { useParams } from "react-router-dom";
 import axiosInstance from "../../utils/axios/axiosInstance.js";
+import { PRODUCT_FIELDS } from "../../utils/config/FormFiedls.js";
 
 const UpdateProduct = () => {
 
@@ -67,52 +68,40 @@ const UpdateProduct = () => {
     return (
         <>
             <h1>Update Produit</h1>
-            <form onSubmit={handleSubmit}>
-                <label htmlFor="nom" className="form-label">Nom</label>
-                <input className="form-control" id='nom' type="text" name='nom' value={product.nom || ""} onChange={handleChange}/>
-
-                <label htmlFor="category" className="form-label">Category</label>
-                <input className="form-control" id='category' type="text" name='category' value={product.category || ""} onChange={handleChange}/>
-
-                <label htmlFor="color" className="form-label">Couleur</label>
-                <input className="form-control" id='color' type="text" name='color' value={product.attribute?.color || ""} onChange={handleChange}/>
-
-                <label htmlFor="size" className="form-label">Pointure</label>
-                <input className="form-control" id='size' type="number" name='size' value={product.attribute?.size || ""} onChange={handleChange}/>
-
-                <label htmlFor="weight" className="form-label">Poids</label>
-                <input className="form-control" id='weight' type="number" name='weight' value={product.attribute?.weight || ""} onChange={handleChange} />
-                
-                <label htmlFor="pied" className="form-label">Type de Pied</label>
-                <select className="form-select" name="pied" id="pied" value={product.attribute?.pied || ""} onChange={handleChange}>
-                    <option value="">-- Choisir --</option>
-                    <option value="plat">Plat</option>
-                    <option value="creux">Creux</option>
-                    <option value="neutre">Neutre</option>
-                </select>
-
-                <label htmlFor="modele" className="form-label">Modèle</label>
-                <input className="form-control" id='modele' type="text" name='modele' value={product.modele || ""} onChange={handleChange} />
-
-                <label htmlFor="photo" className="form-label">Photo</label>
-                <input className="form-control" id='photo' type="text" name='photo' value={product.photo || ""} onChange={handleChange} />
-                
-                <label htmlFor="descrtiption" className="form-label">Description</label>
-                <input className="form-control" id='description' type="text" name='description' value={product.description || ""} onChange={handleChange} />
-
-                <label htmlFor="stock" className="form-label">Stock</label>
-                <input className="form-control" id='stock' type="number" name='stock' value={product.stock || ""} onChange={handleChange} />
-
-                <label htmlFor="prix" className="form-label">Prix</label>
-                <input className="form-control" id='modele' type="number" name='modele' value={product.prix || ""} onChange={handleChange} />
-
-                <label htmlFor="id_marque" className="form-label">Marque</label>
-                <select className="form-select" id='id_marque' type="text" name='id_marque' value={product.id_marque || ""} onChange={handleChange} >
-                    {allMarque.map(info => (
-                        <option value={info._id}>{info.nom}</option>
-                    ))}
-                </select>
-
+            <form onSubmit={handleSubmit} className="container mt-4">
+                <div className="row">
+                    {PRODUCT_FIELDS.map((field, index) =>
+                        <div key={field.id} className="mb-3 col-md-6">
+                            <label className="form-label d-flex fw-bold" htmlFor={field.id}>{field.label}</label>
+                            {field.type === "select" ? (
+                                <select className="form-select" 
+                                    name={field.name}
+                                    id={field.id}
+                                    value={product[field.name] || ""}
+                                    onChange={handleChange}>
+                                    <option value="">{field.placeholder}</option>
+                                    <option value={field.option1}>{field.option1}</option>
+                                    <option value={field.option2}>{field.option2}</option>
+                                    <option value={field.option3}>{field.option3}</option>
+                                </select>
+                            ) : (
+                                <input className="form-control d-flex fw-bold" 
+                                    type={field.type}
+                                    name={field.name}
+                                    id={field.id}
+                                    placeholder={field.placeholder}
+                                    value={
+                                        field.name === "colors" ? product.attribute?.color || "" :
+                                        field.name === "sizes" ? product.attribute?.size || "" :
+                                        field.name === "weight" ? product.attribute?.weight || "" :
+                                        field.name === "pied" ? product.attribute?.pied || "" :
+                                        product[field.name] || ""
+                                    }
+                                    onChange={handleChange} />
+                            )}
+                        </div>
+                    )}
+                </div>
                 <button type="submit" className="btn btn-primary">
                     Update
                 </button>

@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 const Footer = () => {
     return (
-        <div className="d-flex justify-content-center">
+        <footer className="col-12 d-flex justify-content-center" style={{backgroundColor:"#552583"}}>
             <p className="mx-auto p-2">
                 Copyright
             </p>
@@ -14,7 +14,7 @@ const Footer = () => {
                 <Link to='mentionLeg'>Mentions Légales</Link>
             </p>
             
-        </div>
+        </footer>
     )
 }
 
