@@ -1,7 +1,7 @@
 const ENV = require("../config/Env.js");
 const createError = require("../helpers/CreateError.js");
 const AuthModel = require("../models/User.Model.js");
-
+const sendEmail = require("../services/nodemailer.js");
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
@@ -12,11 +12,51 @@ const register = async (req, res, next) => {
     const passwordHash = await bcrypt.hash(req.body.password, 10);
     const user = await AuthModel.create({
       ...req.body,
-      password: passwordHash
+      password: passwordHash,
+      isVerified: false,
     });
-    res.status(201).json(user)
+    // Génération d'un token de vérification (par exemple, un token JWT)
+    // C'est comme un ticket qui expire dans 5 minutes ⏳
+    const verificationToken = jwt.sign(
+      { id: user._id }, 
+      ENV.JWT_SECRET, 
+      { expiresIn: '24h' }
+    );
+    // Envoi de l'email de vérification
+    await sendEmail(req.body, verificationToken);
+    // Réponse au client
+    res.status(201).json({user, message: "Utilisateur créé avec succès. Veuillez vérifier votre email." });
+
   } catch (error) {
      next(createError(error.status || 500, error.message, error.details));
+  }
+};
+
+// Cette fonction va vérifier l'email de l'utilisateur
+// C'est comme vérifier un ticket d'entrée à un concert! 🎫
+const verifyEmail = async (req, res, next) => {
+  try {
+    // On récupère le token depuis l'URL (comme un code secret! 🔑)
+    const { token } = req.params;
+
+    // On vérifie si le token est valide
+    // C'est comme quand le videur vérifie si ton billet est authentique! 🕵️
+    const decoded = jwt.verify(token, ENV.JWT_SECRET);
+
+
+    // Maintenant on active le compte de l'utilisateur en mettant isVerified à true
+
+    await AuthModel.findByIdAndUpdate(decoded.id, { isVerified: true },
+      { new: true}
+    );
+
+    // on redirecte vers l'application front-end avec un paramètre indiquant le succès
+    return res.redirect(`${ENV.WEB_APP_URL}/login?verified=true`)
+
+  } catch (error) {
+  // vous pouviez aussi utiliser la fonciton next() si jamais.
+    console.error('Erreur de vérification:', error);
+    return res.status(400).json({ message: 'Lien invalide ou expiré.' });
   }
 };
 
@@ -36,6 +76,11 @@ const login = async (req, res, next) => {
       return next(createError(400, "Wrong password or email"));
     }
 
+    // Vérification si l'utilisateur a confirmé son email
+    if (user.isVerified === false) {
+    return next(createError(403, "Veuillez vérifier votre email avant de vous connecter."));
+    }
+
     // Génération d'un token JWT
     const token = jwt.sign({ id: user._id }, ENV.JWT_SECRET, { expiresIn: ENV.JWT_EXPIRES_IN });
 
@@ -51,4 +96,5 @@ const login = async (req, res, next) => {
 module.exports = {
   register,
   login,
+  verifyEmail,
 };

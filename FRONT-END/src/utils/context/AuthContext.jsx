@@ -49,11 +49,19 @@ export const AuthProvider = ({ children }) => {
 
     // Gestion de l'inscription
     const register = async (dataForm) => {
+        setIsLoading(true);
         try {
             const {status} = await axiosInstance.post(URL.AUTH_REGISTER, dataForm);
-            if (status === 201) console.log("success register");
+            if (status === 201) {
+                console.log("success register");
+                // alert
+                alert("Inscription réussie ! Veuillez vérifier votre email pour activer votre compte.");
+                navigate("/sign");
+            }
         } catch (error) {
             console.log(error.message);
+        } finally {
+            setIsLoading(false);
         }
     }
 

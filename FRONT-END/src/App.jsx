@@ -20,6 +20,9 @@ import Historique from './pages/PageHistorique/Historique';
 import CGV from './pages/PageFooter/CGV';
 import MentionsLegale from './pages/PageFooter/MentionsLegales';
 import Detail from './pages/DetailProduct/Detail';
+import Panier from './pages/PagePanier/Panier';
+import ProfilUser from './pages/DetailUser/ProfilUser';
+import VerifyEmail from './pages/VerifyEmail/VerifyEmail';
 
 //// ADMIN
 import Dashboard from './admin/pageDashboard/Dashboard';
@@ -59,6 +62,7 @@ function App() {
           <Route path='cgv' element={<CGV />} />
           <Route path='mentionLeg' element={<MentionsLegale/>}/>
           <Route path='detail/:idProduct' element={<Detail />} />
+          <Route path='verify/:token' element={<VerifyEmail/>}/>
       </Route>
         
         {/* Routes publiques (non accessible si connecté) */}
@@ -72,7 +76,9 @@ function App() {
         {/* Route privé, accessible uniquement aux utilisateurs connectés */}
       <Route element={<PrivateRoute/>}>
         <Route path='/' element={<Template/>}>
-          <Route  path='historique' element={<Historique/>} />
+            <Route path='historique' element={<Historique />} />
+            <Route path='panier' element={<Panier />} />
+            <Route path='profil' element={<ProfilUser />} />
         </Route>
       </Route>
       

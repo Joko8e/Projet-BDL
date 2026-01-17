@@ -3,6 +3,7 @@ const UserModel = require("../models/User.Model.js");
 const Env = require("../config/Env.js");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
+const sendEmail = require("../services/nodemailer.js");
 const AuthModel = require("../models/User.Model.js");
 
 

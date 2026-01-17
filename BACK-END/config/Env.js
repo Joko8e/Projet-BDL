@@ -12,7 +12,9 @@ const ENV = {
   EMAIL_USER: process.env.EMAIL_USER,
   EMAIL_PASS: process.env.EMAIL_PASS,
   WEB_APP_URL: process.env.WEB_APP_URL,
-  DOMAINE_URL: process.env.DOMAINE_URL
+  DOMAINE_URL: process.env.DOMAINE_URL,
+  EMAIL_USER: process.env.EMAIL_USER,
+  EMAIL_PASS: process.env.EMAIL_PASS
 };
 
 module.exports = ENV;

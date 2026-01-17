@@ -68,8 +68,8 @@ export const REGISTER_FIELDS = [
     {
         label:"Code Postal",
         type: "text",
-        name: "codePostal",
-        id:"codePostal",
+        name: "code_postal",
+        id:"code_postal",
         placeholder:"Code Postal"
     }
 ]

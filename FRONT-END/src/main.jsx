@@ -2,7 +2,7 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
 import { AuthProvider } from "./utils/context/AuthContext.jsx";
-import { CartProvider } from "./utils/context/CartContext.jsx";
+import { PanierProvider } from "./utils/context/PanierContext.jsx";
 import "./index.css";
 import App from "./App.jsx";
 
@@ -13,9 +13,9 @@ createRoot(document.getElementById("root")).render(
   <StrictMode>
     <BrowserRouter>
       <AuthProvider>
-        <CartProvider>
+        <PanierProvider>
           <App />
-        </CartProvider>
+        </PanierProvider>
       </AuthProvider>
     </BrowserRouter>
   </StrictMode>

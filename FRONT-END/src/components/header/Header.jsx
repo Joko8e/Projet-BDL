@@ -1,17 +1,17 @@
 import React from "react";
 import { useContext } from "react";
 import { AuthContext } from "../../utils/context/AuthContext";
+import { PanierContext } from "../../utils/context/PanierContext";
 import { Link } from "react-router-dom";
 import HEADER_LINK from "../../utils/config/LinkHeader";
 
 const Header = () => {
 
     const { user, logout } = useContext(AuthContext);
-console.log("tt",user);
+    const { totalArticle } = useContext(PanierContext);
 
     const isAuthenticated = user;
     const role = user?.role;
-    console.log("is auth", isAuthenticated);
     
 
     const visibleLinks = HEADER_LINK.filter((link) => {
@@ -46,7 +46,12 @@ console.log("tt",user);
                                     {link.label}
                                 </Link>
                             </li>
-                        ))} 
+                        ))}
+                        <li>
+                            <Link className="nav-link" to='/panier'>
+                                Panier ({totalArticle()})
+                            </Link>
+                        </li>
                     </ul>
 
                     {/* bouton de connexion / deconnexion */}

@@ -1,10 +1,14 @@
 import React from "react";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { useParams } from "react-router-dom";
 import URL from "../../utils/constant/url";
 import axiosInstance from "../../utils/axios/axiosInstance.js";
 
+import { PanierContext } from "../../utils/context/PanierContext.jsx";
+
 const Detail = () => {
+    const {addPanier} = useContext(PanierContext);
+
     const params = useParams();
     const { idProduct } = params;
     const [product, setProduct] = useState([])
@@ -51,9 +55,9 @@ const Detail = () => {
                     </div>
 
                     {/* Bouton d'action */}
-                    <button className="btn btn-warning btn-lg shadow-sm w-100">
+                    <p className="btn btn-warning btn-lg shadow-sm w-100" onClick={() => addPanier(product)}>
                         Ajouter au panier
-                    </button>
+                    </p>
                 </div>
             </div>
         </div>

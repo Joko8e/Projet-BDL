@@ -1,13 +1,14 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import axiosInstance from "../../utils/axios/axiosInstance.js";
+import { Modal } from "bootstrap";
 import { Link } from "react-router-dom";
 import URL from "../../utils/constant/url.js";
 import { USER_FIELDS } from "../../utils/config/FormFiedls.js";
 
 const User = () => {
     const [users, setUsers] = useState([]);
-
+    const [userToDelete, setUserToDelete] = useState(null);
     const [dataUser, setDataUser] = useState({
         nom: "",
         prenom: "",
@@ -53,17 +54,35 @@ const User = () => {
         }
     }
 
-    const deleteUser = async (id) => {
-        try {
-            const { status } = await axiosInstance.delete(URL.DELETE_USER+`/`+ id);
-            if (status === 200) {
-                console.log("User supprimé avec succès");
-                await getAllUsers(); // Recharge la liste des utilisateurs
+    const confirmDelete = (id) => {
+                setUserToDelete(id);
+        
+                // Ouvrir le modal
+                const modal = new Modal(
+                    document.getElementById("deleteModal")
+                );
+                modal.show();
+            };
+
+        const deleteUser = async (id) => {
+            try {
+                const { status } = await axiosInstance.delete(URL.DELETE_USER+`/`+ id);
+                if (status === 200) {
+                    console.log("User supprimé avec succès");
+                    await getAllUsers(); // Recharge la liste des utilisateurs
+                }
+            } catch (error) {
+                console.log(error.message);
+            } finally {
+    
+            // Fermer le modal après la suppression
+            const modalElement = document.getElementById("deleteModal");
+            const modal = Modal.getInstance(modalElement);
+            if(modal) modal.hide();
+                setUserToDelete(null);
             }
-        } catch (error) {
-            console.log(error.message);
-        }
-    }
+    };    
+    
 
     return (
         <div>
@@ -78,6 +97,8 @@ const User = () => {
                             <th>Adresse</th>
                             <th>Ville</th>
                             <th>Code Postal</th>
+                            <th>Vérifié</th>
+                            <th>Role</th>
                             <th>Date d'inscription</th>
                             <th>Action</th>
                         </tr>
@@ -92,6 +113,8 @@ const User = () => {
                                 <td>{user.adresse}</td>
                                 <td>{user.ville}</td>
                                 <td>{user.code_postal}</td>
+                                <td>{user.isVerified ? "Oui" : "Non"}</td>
+                                <td>{user.role}</td>
                                 {/* new Date().toLocaleDateString() sert à formater la date d'inscription pour l'affichage */}
                                 <td>{new Date(user.date_inscription).toLocaleDateString()}</td>
                                 <td>
@@ -100,12 +123,12 @@ const User = () => {
                                     </Link>
                                 </td>
                                 <td>
-                                    <Link to={`/admin/user/${user._id}`} className="btn btn-primary btn-sm me-2">
+                                    <Link to={`/admin/user/${user._id}`} className="btn btn-warning btn-sm me-2">
                                         <i className="bi bi-pencil"></i>
                                     </Link>
                                 </td>
                                 <td>
-                                    <button onClick={() => deleteUser(user._id)} className="btn btn-danger btn-sm">
+                                    <button onClick={() => confirmDelete(user._id)} className="btn btn-danger btn-sm">
                                         <i className="bi bi-trash"></i>
                                     </button>
                                 </td>
@@ -154,7 +177,40 @@ const User = () => {
                 </div>
             </div>
                 
-        </form>
+            </form>
+            
+            {/* Modal de confirmation de suppression */}
+            <div className="modal fade" id="deleteModal" tabIndex="-1">
+                <div className="modal-dialog modal-dialog-centered">
+                    <div className="modal-content">
+
+                        <div className="modal-header">
+                            <h5 className="modal-title">Confirmer la suppression</h5>
+                            <button type="button" className="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+
+                        <div className="modal-body">
+                            Êtes-vous sûr de vouloir supprimer cet utilisateur ?
+                            <br />
+                            <strong>Cette action est irréversible.</strong>
+                        </div>
+
+                        <div className="modal-footer">
+                            <button
+                                type="button"
+                                className="btn btn-secondary"
+                                data-bs-dismiss="modal"
+                            >
+                                Annuler
+                            </button>
+
+                            <button type="button" className="btn btn-danger" onClick={() => deleteUser(userToDelete)}>
+                                Supprimer
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
     
         </div>
     );

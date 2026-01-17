@@ -6,7 +6,7 @@ import { REGISTER_FIELDS } from "../../utils/config/FormFiedls.js";
 
 const Register = () => {
     const { register } = useContext(AuthContext);
-
+    const [isLoading, setIsLoading] = useState(false);
     const [user, setUser] = useState({})
 
     const handleChange = (event) => {
@@ -17,8 +17,24 @@ const Register = () => {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        // Appeler la fonction d'inscription du contexte d'authentification
-        await register(user);
+
+        // vérifier que les champs sont remplis
+        if (!user.nom || !user.prenom || !user.email || !user.password || !user.adresse || !user.ville || !user.code_postal) {
+            alert("Veuillez remplir tous les champs obligatoires.");
+            return;
+        }
+
+        setIsLoading(true);
+
+        try {
+            // Appeler la fonction d'inscription du contexte d'authentification
+            await register(user);
+        } catch (error) {
+            console.error("Erreur lors de l'inscription :", error);
+            alert("Une erreur est survenue lors de l'inscription. Veuillez réessayer plus tard.");
+        } finally {
+            setIsLoading(false);
+        }
     }   
 
 
@@ -29,7 +45,7 @@ const Register = () => {
                     <form onSubmit={handleSubmit}>
                         {REGISTER_FIELDS.map((field, index) => (
                             <div className="input-group flex-nowrap mb-3" key={index}>
-                                <span>
+                                <span className="input-group-text">
                                     <i className={field.icon}></i>
                                 </span>
                                 <input
@@ -42,7 +58,9 @@ const Register = () => {
                                 />
                             </div>
                         ))}
-                        <button type="submit" className="btn btn-primary w-100">Sign</button>
+                    <button type="submit" className="btn btn-primary w-100" disabled={isLoading}>
+                        {isLoading ? "Inscription en cours..." : "S'inscrire"}
+                    </button>
                         
                     </form>
                     <p className="text-center mt-3">
