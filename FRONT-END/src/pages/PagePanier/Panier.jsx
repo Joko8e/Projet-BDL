@@ -10,11 +10,11 @@ const Panier = () => {
 
     return (
         <section>
-            {panier ?
+            {panier.length > 0 ?
                 <>
                     <div style={styles.root}>
                         {panier.map((product, index) => (
-                            <div key={index} style={{ border: "1px solid black", margin: "10px", padding: "10px" }}>
+                            <div key={ product._id || index} style={{ border: "1px solid black", margin: "10px", padding: "10px" }}>
                                 <h3>{product.name}</h3>
                                 <p>Prix unitaire : {product.price} €</p>
                                 <img src={product.photo} alt={product.name} className="img-fluid rounded shadow" style={{ maxHeight: '150px', objectFit: 'cover' }} />
@@ -30,7 +30,7 @@ const Panier = () => {
                     </div>
                     <div>
                         <h2>Prix total du panier : {totalPrice} €</h2>
-                        <button>Passer la commande ({totalArticle()} articles)</button>
+                        <button className="btn btn-warning">Passer la commande ({totalArticle()} articles)</button>
                     </div>
                 </>
                 :

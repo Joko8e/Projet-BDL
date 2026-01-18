@@ -86,9 +86,9 @@ const User = () => {
 
     return (
         <div>
-            <div className="table-responsive">
+            <div className="table-responsive" style={{ maxHeight: "500px", overflowY: "auto" }}>
                 <table className="table table-striped table-bordered">
-                    <thead className="table-dark sticky-top">
+                    <thead className="table-dark sticky-top text-center align-middle">
                         <tr>
                             <th>ID</th>
                             <th>Nom</th>
@@ -121,13 +121,9 @@ const User = () => {
                                     <Link to={`/admin/user/${user._id}`} className="btn btn-primary btn-sm me-2">
                                         <i className="bi bi-eye"></i>
                                     </Link>
-                                </td>
-                                <td>
                                     <Link to={`/admin/user/${user._id}`} className="btn btn-warning btn-sm me-2">
                                         <i className="bi bi-pencil"></i>
                                     </Link>
-                                </td>
-                                <td>
                                     <button onClick={() => confirmDelete(user._id)} className="btn btn-danger btn-sm">
                                         <i className="bi bi-trash"></i>
                                     </button>

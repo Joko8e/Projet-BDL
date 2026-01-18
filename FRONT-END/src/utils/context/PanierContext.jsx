@@ -6,7 +6,6 @@ export const PanierContext = createContext();
 
 // Fournir le contexte du panier aux composants enfants
 export const PanierProvider = ({ children }) => {
-  const [isLoading, setIsLoading] = useState(false);
 
   const [panier, setPanier] = useState([]); // État pour stocker les articles du panier
   const [totalPrice, setTotalPrice] = useState(0); // État pour stocker le prix total du panier, est initialisé à 0
@@ -37,7 +36,11 @@ export const PanierProvider = ({ children }) => {
 
   // Fonction pour sauvegarder le panier dans le localStorage avec debounce
   const savePanierToLocalStorage = debounce((nouveauPanier) => {
-    localStorage.setItem("panier", JSON.stringify(nouveauPanier));
+    try {
+      localStorage.setItem("panier", JSON.stringify(nouveauPanier));
+    } catch (error) {
+      console.log(error.message);
+    }
   }, 1000);
 
   // Fonction pour obtenir le nombre total d'articles dans le panier
@@ -76,6 +79,7 @@ export const PanierProvider = ({ children }) => {
     const nouveauPanier = [...panier];
     nouveauPanier.splice(index, 1);
     setPanier(nouveauPanier);
+    savePanierToLocalStorage(nouveauPanier);
   }
 
   // Fonction pour ajouter un article au panier
