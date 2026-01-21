@@ -32,7 +32,7 @@ const DetailProduct = () => {
             <p>{product.modele}</p>
             <img src={product.photo} alt={product.nom} width={200} />
             <p>{product.description}</p>
-            <p>{product.prix}</p>
+            <p>{product.price}</p>
             <p>{product.stock}</p>
         </div>
     )

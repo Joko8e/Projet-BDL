@@ -105,7 +105,7 @@ const Product = () => {
                     photo: "",
                     description: "",
                     stock: "",
-                    prix: ""
+                    price: ""
                 })
             }
             
@@ -163,7 +163,7 @@ const Product = () => {
                         <td><img src={item.photo} alt={item.nom} width={100} /></td>
                         <td>{item.description}</td>
                         <td>{item.stock}</td>
-                        <td>{item.prix}</td>
+                        <td>{item.price}</td>
                         <td>        
                             <Link className="btn btn-info me-2" to={{pathname:`detail/${item._id}`}}>
                                 <i className="bi bi-eye"></i>
