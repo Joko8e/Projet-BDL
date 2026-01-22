@@ -49,7 +49,7 @@ const Detail = () => {
                     {/* Prix mis en évidence */}
                     <div className="d-flex align-items-center mb-4">
                         <span className="text-success fw-bold me-3 fs-3">
-                            {product.prix} €
+                            {product.price} €
                         </span>
                         <span className="badge bg-info text-dark">En stock</span>
                     </div>

@@ -11,7 +11,7 @@ const errorMiddleware = require("./middlewares/ErrorMiddleware.js");
 // IMPORT ROUTES
 const authRouter = require("./router/Auth.Router.js");
 const MarqueRouter = require("./router/Marque.Router.js");
-const ChaussureRouter = require("./router/Chaussures.Routers.js");
+const ProductRouter = require("./router/Product.Routers.js");
 const UserRouter = require("./router/User.Router.js");
 const CommandeRouter = require("./router/Commande.Router.js");
 
@@ -48,7 +48,7 @@ app.use(
 // PREFIX
 app.use("/api/auth", authRouter);
 app.use("/api/marque", MarqueRouter);
-app.use("/api/chaussure", ChaussureRouter);
+app.use("/api/produit", ProductRouter);
 app.use("/api/user", UserRouter);
 app.use("/api/commande", CommandeRouter);
 

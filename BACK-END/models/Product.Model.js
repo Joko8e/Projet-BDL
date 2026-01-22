@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const Chaussure = mongoose.Schema(
+const Product = mongoose.Schema(
   {
     id_marque:{
       type: mongoose.Schema.Types.ObjectId,
@@ -39,7 +39,7 @@ const Chaussure = mongoose.Schema(
       required: true,
       default:0,
     },
-    prix:{
+    price:{
       type: Number, 
       required: true, 
     },
@@ -47,4 +47,4 @@ const Chaussure = mongoose.Schema(
   { timestamps: true } // crée createdAt et updatedAt automatiquement
 )
 
-module.exports = mongoose.model('Chaussure', Chaussure)
+module.exports = mongoose.model('Product', Product)

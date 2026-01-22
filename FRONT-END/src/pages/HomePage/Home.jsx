@@ -75,7 +75,7 @@ const Home = () => {
                             <div className="card-body d-flex flex-column">
                                 <h5 className="card-title mb-1">{item.nom}</h5>
                                 <h6 className="card-subtitle mb-2 text-muted">{item.modele}</h6>
-                                <p className="card-text fw-bold mt-auto">{item.prix} €</p> 
+                                <p className="card-text fw-bold mt-auto">{item.price} €</p> 
                                 {/* mt-auto pousse le prix vers le bas */}
                             </div>
                             <div className="card-footer bg-white border-0">

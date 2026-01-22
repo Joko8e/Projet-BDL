@@ -154,14 +154,14 @@ export const PRODUCT_FIELDS = [
         type: "select"
     },
     {
-        label:"Couleurs (séparées par des virgules)",
+        label:"Couleurs",
         type: "text",
         name: "colors",
         id:"colors",
         placeholder:"Couleurs"
     },
     {
-        label:"Tailles (séparées par des virgules)",
+        label:"Tailles",
         type: "text",
         name: "sizes",
         id:"sizes",
@@ -208,8 +208,8 @@ export const PRODUCT_FIELDS = [
     {
         label:"Prix",
         type: "number",
-        name: "prix",
-        id:"prix",
+        name: "price",
+        id:"price",
         placeholder:"Prix du produit"
     }
 ]

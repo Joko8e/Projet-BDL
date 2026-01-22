@@ -82,6 +82,13 @@ export const PanierProvider = ({ children }) => {
     savePanierToLocalStorage(nouveauPanier);
   }
 
+  // Fonction pour vider le panier
+  const clearPanier = () => {
+  setPanier([]);
+  localStorage.removeItem("panier");
+  };
+
+
   // Fonction pour ajouter un article au panier
   const addPanier = async (product) => {
     try {
@@ -110,7 +117,7 @@ export const PanierProvider = ({ children }) => {
 
   return (
     <PanierContext.Provider value={{
-      incremente, decremente, addPanier, priceArticleByQuantity, totalArticle, panier, totalPrice, removeArticle
+      incremente, decremente, addPanier, priceArticleByQuantity, totalArticle, panier, totalPrice, removeArticle, clearPanier
     }}>
       {children}</PanierContext.Provider> 
   )
