@@ -42,6 +42,7 @@ const Panier = () => {
                                 <h3>{product.name}</h3>
                                 <p>Prix unitaire : {product.price} €</p>
                                 <img src={product.photo} alt={product.name} className="img-fluid rounded shadow" style={{ maxHeight: '150px', objectFit: 'cover' }} />
+                                <p>Taille : {product.size}</p>
                                 <p>Quantité : 
                                     <button onClick={() => decremente(index)}>-</button> 
                                     {product.quantite} 

@@ -1,7 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
-import axios from "axios";
 import { Modal } from "bootstrap";
 import URL from "../../utils/constant/url";
 import axiosInstance from "../../utils/axios/axiosInstance";
@@ -12,9 +11,9 @@ const Product = () => {
         id_marque: "",
         nom: "",
         category: "",
-        attribute: {
+        attributes: {
             color: "",
-            size: "",
+            size: [],
             weight: "",
             pied:""
         },
@@ -22,7 +21,7 @@ const Product = () => {
         photo: "",
         description: "",
         stock: "",
-        prix: ""
+        price: ""
     })
 
     const [allProduct, setAllProduct] = useState([])
@@ -86,6 +85,8 @@ const Product = () => {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
+        console.log("produit", JSON.stringify(product, null, 2));
+        
         try {
             const { status } = await axiosInstance.post(URL.POST_PRODUIT, product)
             if (status === 201) {
@@ -95,9 +96,9 @@ const Product = () => {
                     id_marque: "",
                     nom: "",
                     category: "",
-                    attribute: {
+                    attributes: {
                         color: "",
-                        size: "",
+                        size: [],
                         weight: "",
                         pied:""
                     },
@@ -108,7 +109,7 @@ const Product = () => {
                     price: ""
                 })
             }
-            
+            alert("Produit ajouté avec succès !");
         } catch (error) {
             console.log(error.message);
         }
@@ -117,11 +118,11 @@ const Product = () => {
     const handleChange = async (event) => {
         const { name, value } = event.target
 
-        if (name === "color" || name === "size" || name === "weight" || name === "pied") {
+        if (name === "color" || name === "weight" || name === "pied") {
             setProduct(prevProduct => ({
                 ...prevProduct,
-                attribute: {
-                    ...prevProduct.attribute,
+                attributes: {
+                    ...prevProduct.attributes,
                     [name]: value
                 }
             }))
@@ -129,6 +130,23 @@ const Product = () => {
         else {
                 setProduct(prevProduct => ({ ...prevProduct, [name]: value }))
         }
+    }
+
+    const handleSizeChange = (size) => {
+        setProduct(prevProduct => {
+            const currentSizes = prevProduct.attributes?.size || [];
+
+            const sizes = currentSizes.includes(size) // Vérifier si la taille est déjà sélectionnée
+                ? currentSizes.filter(s => s !== size) // Retirer la taille si elle est déjà sélectionnée; filter sert 
+                : [...currentSizes, size]; // Ajouter la taille si elle n'est pas sélectionnée 
+            return {
+                ...prevProduct,
+                attributes: {
+                    ...prevProduct.attributes,
+                    size: sizes
+                }
+            };
+        } )
     }
 
 
@@ -140,15 +158,16 @@ const Product = () => {
                     <tr>
                         <th>Marque</th>
                         <th>Nom</th>
-                        <th>Categorie</th>
-                        <th>color</th>
-                        <th>pied</th>
-                        <th>modele</th>
-                        <th>photo</th>
-                        <th>description</th>
-                        <th>stock</th>
-                        <th>prix</th>
-                        <th>action</th>
+                        <th>Catégorie</th>
+                        <th>Couleurs</th>
+                        <th>Type de pied</th>
+                        <th>Modèle</th>
+                        <th>Photo</th>
+                        <th>Description</th>
+                        <th>Pointure Disponible</th>    
+                        <th>Stock</th>
+                        <th>Prix</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -157,11 +176,12 @@ const Product = () => {
                         <td>{item.id_marque?.nom}</td>
                         <td>{item.nom}</td>
                         <td>{item.category}</td>
-                        <td>{item.attribute?.color}</td>
-                        <td>{item.attribute?.pied}</td>
+                        <td>{item.attributes?.color}</td>
+                        <td>{item.attributes?.pied}</td>
                         <td>{item.modele}</td>
                         <td><img src={item.photo} alt={item.nom} width={100} /></td>
                         <td>{item.description}</td>
+                        <td className="text-center">{item.attributes?.size?.join("/" || "-")}</td>    
                         <td>{item.stock}</td>
                         <td>{item.price}</td>
                         <td>        
@@ -203,6 +223,25 @@ const Product = () => {
                                     <option value={field.option2}>{field.option2}</option>
                                     <option value={field.option3}>{field.option3}</option>
                                 </select>
+                            ) : 
+                                    field.type === "checkbox-group" ? (
+                                        <div className="d-flex flex-wrap gap-3">
+                                            {field.options.map((size) => (
+                                                <div className="form-check" key={size}>
+                                                    <input
+                                                        type="checkbox"
+                                                        className="form-check-input"
+                                                        id={`size-${size}`}
+                                                        checked={product.attributes?.size?.includes(size)} // checked sert à cocher la case si la taille est dans le tableau
+                                                        onChange={() => handleSizeChange(size)}
+                                                    />
+                                                    {/* label sert à afficher la taille à côté de la case à cocher */}
+                                                    <label htmlFor={`size-${size}`} className="form-check-label">  
+                                                        {size}
+                                                    </label>
+                                                </div>
+                                            ))}
+                                        </div>
                             ) : (
                                 <input
                                     type={field.type}
@@ -211,7 +250,7 @@ const Product = () => {
                                     name={field.name}
                                     placeholder={field.placeholder}
                                     value={
-                                        field.name in product.attribute ? product.attribute[field.name] : product[field.name]
+                                        field.name in product.attributes ? product.attributes[field.name] : product[field.name]
                                     }
                                     onChange={handleChange}
                                     required
@@ -254,7 +293,7 @@ const Product = () => {
                         </div>
 
                         <div className="modal-body">
-                            Êtes-vous sûr de vouloir supprimer cette marque ?
+                            Êtes-vous sûr de vouloir supprimer ce produit ?
                             <br />
                             <strong>Cette action est irréversible.</strong>
                         </div>

@@ -26,15 +26,93 @@ const DetailProduct = () => {
     }
 
     return (
-        <div>
-            <p>{product.nom}</p>
-            <p>{product.category}</p>
-            <p>{product.modele}</p>
-            <img src={product.photo} alt={product.nom} width={200} />
-            <p>{product.description}</p>
-            <p>{product.price}</p>
-            <p>{product.stock}</p>
+        <div className="container mt-4">
+      <div className="card shadow-lg border-0">
+        <div className="row g-0">
+          {/* Image */}
+          <div className="col-md-5 text-center p-4">
+            <img
+              src={product.photo}
+              alt={product.nom}
+              className="img-fluid rounded"
+              style={{ maxHeight: "350px", objectFit: "contain" }}
+            />
+          </div>
+
+          {/* Infos */}
+          <div className="col-md-7">
+            <div className="card-body">
+              <h3 className="card-title fw-bold">{product.nom}</h3>
+
+              <div className="mb-3">
+                <span className="badge bg-primary me-2">
+                  {product.category}
+                </span>
+                <span className="badge bg-secondary">
+                  Modèle : {product.modele}
+                </span>
+              </div>
+
+              <p className="text-muted">{product.description}</p>
+
+              <table className="table table-sm table-bordered mt-3">
+                <tbody>
+                  <tr>
+                    <th>Marque</th>
+                    <td>{product.id_marque?.nom || "-"}</td>
+                  </tr>
+
+                  <tr>
+                    <th>Couleur</th>
+                    <td>{product.attributes?.color || "-"}</td>
+                  </tr>
+
+                  <tr>
+                    <th>Type de pied</th>
+                    <td>
+                      <span className="badge bg-info text-dark">
+                        {product.attributes?.pied || "-"}
+                      </span>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <th>Pointures</th>
+                    <td>
+                      {product.attributes?.size?.length > 0
+                        ? product.attributes.size.join(" / ")
+                        : "-"}
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <th>Stock</th>
+                    <td>
+                      <span
+                        className={`badge ${
+                          product.stock > 0
+                            ? "bg-success"
+                            : "bg-danger"
+                        }`}
+                      >
+                        {product.stock}
+                      </span>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <th>Prix</th>
+                    <td className="fw-bold text-success">
+                      {product.price} €
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
         </div>
+      </div>
+    </div>
     )
 }
 

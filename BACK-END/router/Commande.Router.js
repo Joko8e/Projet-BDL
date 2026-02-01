@@ -6,7 +6,7 @@ const router = express();
 
 router.post("/post", AuthMiddleware, CommandeController.createCommande);
 router.get("/get", AuthMiddleware, CommandeController.getCommandes);
-router.get("/get/:id", AuthMiddleware, CommandeController.getCommandeByID);
+router.get("/get/:user", AuthMiddleware, CommandeController.getCommandeByUser);
 router.delete("/delete/:id", AuthMiddleware, CommandeController.deleteCommandeById);
 
 module.exports = router;

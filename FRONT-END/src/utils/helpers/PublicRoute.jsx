@@ -4,7 +4,7 @@ const PublicRoute = () => {
     const user = localStorage.getItem("auth");
     return (
         // Si l'utilisateur est authentifié, rendre les composants enfants, sinon rediriger vers la page d'accueil
-        user ? <Navigate to="/" /> :  <Outlet />
+        user ? <Outlet /> :  <Navigate to="/" />
     )
 }
 

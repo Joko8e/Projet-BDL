@@ -66,7 +66,7 @@ const getCommandes = async (req, res, next) => {
 }
 
 // faire un get d'une commande par son ID
-const getCommandeByID = async (req, res, next) => {
+const getCommandeByUser = async (req, res, next) => {
     try {
         if(!req.auth) {
             return next (createError (401, "Utilisateur non authentifié"));
@@ -104,7 +104,7 @@ const updateCommandeById = async (req, res, next) => {
 module.exports = {
     createCommande,
     getCommandes,
-    getCommandeByID,
+    getCommandeByUser,
     deleteCommandeById,
     updateCommandeById
 }

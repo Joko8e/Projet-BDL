@@ -7,7 +7,8 @@ import axiosInstance from "../../utils/axios/axiosInstance.js";
 import { PanierContext } from "../../utils/context/PanierContext.jsx";
 
 const Detail = () => {
-    const {addPanier} = useContext(PanierContext);
+    const { addPanier } = useContext(PanierContext);
+    const [selectSize, setSelectSize] = useState(null);
 
     const params = useParams();
     const { idProduct } = params;
@@ -54,9 +55,33 @@ const Detail = () => {
                         <span className="badge bg-info text-dark">En stock</span>
                     </div>
 
+                    <div className="mb-4">
+                        <div className="mb-4">
+                            <h5>Taille</h5>
+                            <div className="d-flex flex-wrap gap-2">
+                                {product.attributes?.size?.map((size) => (
+                                <button
+                                    key={size}
+                                    className={`btn ${
+                                    selectSize === size ? "btn-dark" : "btn-outline-dark"
+                                    }`}
+                                    onClick={() => setSelectSize(size)}
+                                >
+                                    {size}
+                                </button>
+                                ))}
+                            </div>
+                        </div>
+                    </div>
+
+
                     {/* Bouton d'action */}
-                    <p className="btn btn-warning btn-lg shadow-sm w-100" onClick={() => addPanier(product)}>
-                        Ajouter au panier
+                    <p
+                        className="btn btn-warning btn-lg shadow-sm w-100"
+                        disabled={!selectSize}
+                        onClick={() => addPanier({ product, size: selectSize })}
+                    >
+                        { selectSize ? "Ajouter au panier" : "Sélectionner une taille" }
                     </p>
                 </div>
             </div>

@@ -137,7 +137,7 @@ export const PRODUCT_FIELDS = [
         placeholder:"Nom du produit"
     },
     {
-        label:"modèle",
+        label:"Modèle",
         type: "text",
         name: "modele",
         id:"modele",
@@ -156,15 +156,16 @@ export const PRODUCT_FIELDS = [
     {
         label:"Couleurs",
         type: "text",
-        name: "colors",
-        id:"colors",
+        name: "color",
+        id:"color",
         placeholder:"Couleurs"
     },
     {
         label:"Tailles",
-        type: "text",
-        name: "sizes",
-        id:"sizes",
+        type: "checkbox-group",
+        name: "size",
+        id:"size",
+        options: [36,37,38,39,40,41,42,43,44,45,46,47,48,49,50],
         placeholder:"Tailles"
     },
     {

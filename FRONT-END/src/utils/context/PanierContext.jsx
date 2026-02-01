@@ -97,7 +97,7 @@ export const PanierProvider = ({ children }) => {
 
       if (panier !== null) {
         nouveauPanier = JSON.parse(panier);
-        const articleFinded = nouveauPanier.find(item => item._id === product._id); // Vérifier si l'article existe déjà dans le panier
+        const articleFinded = nouveauPanier.find(item => item._id === product._id && item.size === product.size); // Vérifier si l'article existe déjà dans le panier
 
         if (articleFinded) {
           articleFinded.quantite += 1;

@@ -37,6 +37,7 @@ const UpdateMarque = () => {
         try {
             const { status } = await axiosInstance.put(URL.UPDATE_MARQUE + '/' + idMarque, marque)
             if (status === 201) console.log('Marque modifié!');
+            alert('Marque mis à jour avec succès!');
         } catch (error) {
             console.log(error.message);
         }

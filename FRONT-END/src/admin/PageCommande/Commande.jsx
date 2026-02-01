@@ -39,62 +39,91 @@ const Commande = () => {
   }
 
     return (
-        // <div>
-        //     <h1>Liste des Commandes</h1>
-        //     <div className="table-responsive">
-        //         <table className="table table-striped table-bordered">
-        //             <thead className="table-dark">
-        //                 <tr>
-        //                     <th>ID Commande</th>
-        //                     <th>Client</th>
-        //                     <th>Date de Commande</th>
-        //                     <th>Total</th>
-        //                     <th>Status</th>
-        //                     <th>Actions</th>
-        //                 </tr>
-        //             </thead>
-        //             <tbody>
-        //                 {commandes.map((commande, index) => (
-        //                     <tr key={commande._id}>
-        //                         <td>{index}</td>
-        //                         <td>{commande.client}</td>
-        //                         <td>{commande.dateCommande}</td>
-        //                         <td>{commande.total} €</td>
-        //                         <td>{commande.status}</td>
-        //                         <td>
-        //                             <Link to={`/admin/commande/${commande._id}`} className="btn btn-primary btn-sm me-2">
-        //                                 <i className="bi bi-eye"></i>
-        //                             </Link>
-        //                         </td>
-        //                     </tr>
-        //                 ))}
-        //             </tbody>
-        //         </table>
-        //     </div>
-        // </div>
-        <div className="container">
-      <h1>Historique des commandes (Admin)</h1>
+        <div className="container mt-4">
+      <h1 className="mb-4 fw-bold">📦 Commandes – Admin</h1>
+
       {orders.length === 0 ? (
-        <p>Aucune commande pour le moment.</p>
+        <div className="alert alert-info">
+          Aucune commande pour le moment.
+        </div>
       ) : (
-        <ul>
-          {orders.map(order => (
-            <li key={order._id} className="mb-4">
-              <h3>Commande #{order._id}</h3>
-              <p>Utilisateur : {order.user?.email || "N/A"}</p>
-              <p>Date : {new Date(order.createdAt).toLocaleDateString()}</p>
-              <p>Prix total : {order.totalPrice} €</p>
-              <h4>Articles :</h4>
-              <ul>
-                {order.items.map(item => (
-                  <li key={item.product._id}>
-                    {item.product.nom} - Quantité : {item.quantity} - Prix unitaire : {item.price} €
-                  </li>
-                ))}
-              </ul>
-            </li>
-          ))}
-        </ul>
+        orders.map(order => (
+          <div key={order._id} className="card mb-4 shadow-sm">
+            <div className="card-header d-flex justify-content-between align-items-center">
+              <div>
+                <strong>Commande</strong> #{order._id}
+              </div>
+              <span className="badge bg-success fs-6">
+                {order.totalPrice} €
+              </span>
+            </div>
+
+            <div className="card-body">
+              <div className="row mb-3">
+                <div className="col-md-4">
+                  <strong>Utilisateur :</strong><br />
+                  {order.user?.email || "N/A"}
+                </div>
+
+                <div className="col-md-4">
+                  <strong>Date :</strong><br />
+                  {new Date(order.createdAt).toLocaleDateString()}
+                </div>
+
+                <div className="col-md-4">
+                  <strong>Articles :</strong><br />
+                  <span className="badge bg-primary">
+                    {order.items.length}
+                  </span>
+                </div>
+              </div>
+
+              <table className="table table-bordered table-sm align-middle">
+                <thead className="table-dark">
+                  <tr>
+                    <th>Produit</th>
+                    <th className="text-center">Quantité</th>
+                    <th className="text-center">Prix unitaire</th>
+                    <th className="text-center">Total</th>
+                    <th className="text-center">Statut</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {order.items.map(item => (
+                    <tr key={item.product._id}>
+                      <td>{item.product.nom}</td>
+                      <td className="text-center">
+                        <span className="badge bg-info text-dark">
+                          {item.quantity}
+                        </span>
+                      </td>
+                      <td className="text-center">
+                        {item.price} €
+                      </td>
+                      <td className="text-center fw-bold">
+                        {item.price * item.quantity} €
+                      </td>
+                      <td className="text-center">
+                        <span className="badge bg-secondary">
+                          {item.status}
+                        </span>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+
+              <div className="d-flex justify-content-end gap-2">
+                <button className="btn btn-outline-primary btn-sm">
+                  Détails
+                </button>
+                <button className="btn btn-outline-danger btn-sm">
+                  Supprimer
+                </button>
+              </div>
+            </div>
+          </div>
+        ))
       )}
     </div>
     )

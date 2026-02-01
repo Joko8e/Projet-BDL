@@ -21,7 +21,7 @@ const Product = mongoose.Schema(
       enum: ['shoes', 'backpack', 'ballon']
     },
     attributes: {
-      color: { type: [String]},
+      color: { type: String},
       size: { type: [Number] },
       weight: { type: Number },
       pied:{ type:[String], enum:['plat', 'creux', 'neutre']}
