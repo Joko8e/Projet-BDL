@@ -1,6 +1,7 @@
 const createError = require("../helpers/CreateError.js");
 const CommandeModel = require("../models/Commande.Model.js");
 const ProductModel = require("../models/Product.Model.js");
+const AuthModel = require("../models/User.Model.js");
 
 // Création du Post d'une commande
 const createCommande = async (req, res, next) => {
@@ -65,13 +66,13 @@ const getCommandes = async (req, res, next) => {
     }
 }
 
-// faire un get d'une commande par son ID
+// faire un get d'une commande selon l'utilisateur connecté
 const getCommandeByUser = async (req, res, next) => {
     try {
         if(!req.auth) {
             return next (createError (401, "Utilisateur non authentifié"));
         }
-        const userId = req.auth._id || req.auth.id; // Récupérer l'ID de l'utilisateur authentifié
+        const userId = req.auth.id; // Récupérer l'ID de l'utilisateur authentifié
         const commande = await CommandeModel.find({user: userId}).populate('items.product').sort({ createdAt: -1 }); // j'utilise find au lieu de findById pour récupérer toutes les commandes de l'utilisateur
         res.status(200).json(commande);
     } catch (error) {
@@ -93,7 +94,20 @@ const deleteCommandeById = async (req, res, next) => {
 // Modidier une commande par son ID
 const updateCommandeById = async (req, res, next) => {
     try {
-        const updatedCommande = await CommandeModel.findByIdAndUpdate(req.params.id, req.body, { new: true });
+        if(!req.auth) {
+            return next (createError (401, "Utilisateur non authentifié"));
+        }
+        
+        const auth = await AuthModel.findById(req.auth.id)
+        if (auth.role !== "admin") {
+            return res.status(403).json("Action non autorisée")
+        }
+        const { id } = req.params; // Récupérer l'ID de la commande à modifier
+
+        const update = {status: req.body.status}; // On ne permet de modifier que le statut de la commande
+
+        const updatedCommande = await CommandeModel.findByIdAndUpdate(id, { $set: update }, { new: true, runValidators: true }); // Met à jour la commande avec les nouvelles données
+        //runValidators: true permet de s'assurer que les validations du modèle sont respectées lors de la mise à jour
         if(!updatedCommande) return next(createError(404, "Not found"));
         res.status(200).json(updatedCommande);
     } catch (error) {

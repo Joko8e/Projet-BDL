@@ -8,6 +8,7 @@ router.post("/post", AuthMiddleware, CommandeController.createCommande);
 router.get("/get", AuthMiddleware, CommandeController.getCommandes);
 router.get("/get/:user", AuthMiddleware, CommandeController.getCommandeByUser);
 router.delete("/delete/:id", AuthMiddleware, CommandeController.deleteCommandeById);
+router.put("/update/:id", AuthMiddleware, CommandeController.updateCommandeById);
 
 module.exports = router;
 

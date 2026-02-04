@@ -30,7 +30,10 @@ export const PanierProvider = ({ children }) => {
   useEffect(() => {
     // Calculer le prix total du panier à chaque modification du panier
     let total = 0;
-    panier.forEach(item => total += item.quantite * item.price); // Calculer le total du panier en fonction de la quantité et du prix de chaque article
+    panier.forEach(item => {
+      const price = item.product?.price || 0;
+      total += item.quantite * price; // Calculer le total du panier en fonction de la quantité et du prix de chaque article
+    });
     setTotalPrice(parseFloat(total.toFixed(2)));
   }, [panier]);
 
@@ -97,8 +100,7 @@ export const PanierProvider = ({ children }) => {
 
       if (panier !== null) {
         nouveauPanier = JSON.parse(panier);
-        const articleFinded = nouveauPanier.find(item => item._id === product._id && item.size === product.size); // Vérifier si l'article existe déjà dans le panier
-
+        const articleFinded = nouveauPanier.find(item => item.product._id === product._id && item.size === product.size); // Vérifier si l'article existe déjà dans le panier
         if (articleFinded) {
           articleFinded.quantite += 1;
         } else {
