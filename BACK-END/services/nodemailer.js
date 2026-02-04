@@ -29,16 +29,16 @@ const sendEmail = async (user, verifieToken) => {
   // C'est comme envoyer une lettre, mais en version numérique! 📧
 
   await transporter.sendMail({
-  // C'est nous qui envoyons l'email (comme l'adresse de l'expéditeur)
-    from: ENV.EMAIL_USER,   
-  // L'adresse email de notre nouvel utilisateur
-    to: user.email,        
-   // Le sujet du mail (ce que verra l'utilisateur en premier)
-    subject: "Vérifiez votre email", 
-    
+    // C'est nous qui envoyons l'email (comme l'adresse de l'expéditeur)
+    from: ENV.EMAIL_USER,
+    // L'adresse email de notre nouvel utilisateur
+    to: user.email,
+    // Le sujet du mail (ce que verra l'utilisateur en premier)
+    subject: "Vérifiez votre email",
+
     // Le message en version texte simple (au cas où l'HTML ne marche pas)
     text: `Hello ${user.prenom},\n\nMerci de vous être inscrit\n\nCordialement.`,
-    
+
     // La version en HTML avec notre lien de vérification
     html: `
     <h1>Bienvenue ${user.prenom} !</h1>
@@ -52,4 +52,37 @@ const sendEmail = async (user, verifieToken) => {
   });
 };
 
-module.exports = sendEmail;
+const sendOrderConfirmationEmail = async (user, commande) => {
+  const orderDetails = commande.items.map(item => {
+    const productName = item.product?.nom || item.product?.name;
+    return `
+    <li>
+      <strong>${productName}</strong> (x${item.quantity} - ${item.product.price} €
+    </li>`}).join('');
+
+  await transporter.sendMail({
+    from: ENV.EMAIL_USER,
+    to: user.email,
+    subject: `Confirmation de votre commande #${commande._id}`,
+    html: `
+      <div style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
+        <h2>Merci pour votre commande, ${user.prenom} !</h2>
+        <p>Nous avons bien reçu votre commande et elle est en cours de traitement.</p>
+        
+        <div style="background-color: #f8f9fa; padding: 15px; border-radius: 5px;">
+          <h3>Récapitulatif de la commande :</h3>
+          <ul>
+            ${orderDetails}
+          </ul>
+          <hr />
+          <p><strong>Total payé : ${commande.totalPrice} €</strong></p>
+        </div>
+
+        <p>Vous recevrez un email dès que votre colis sera expédié.</p>
+        <p>Cordialement,<br />L'équipe E-commerce</p>
+      </div>
+    `,
+  });
+}
+
+module.exports = { sendEmail, sendOrderConfirmationEmail };

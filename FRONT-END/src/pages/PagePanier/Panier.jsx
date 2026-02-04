@@ -33,7 +33,6 @@ const Panier = () => {
             console.log(error.message);
         }
     };
-    console.log("contenu du panier:",panier);
     
     return (
         <section>
@@ -42,9 +41,9 @@ const Panier = () => {
                     <div style={styles.root}>
                         {panier.map((item, index) => (
                             <div key={ item._id || index} style={{ border: "1px solid black", margin: "10px", padding: "10px" }}>
-                                <h3>{item.product?.name}</h3>
+                                <h3>{item.product?.nom}</h3>
                                 <p>Prix unitaire : {item.product?.price} €</p>
-                                <img src={item.product?.photo} alt={item.product?.name} className="img-fluid rounded shadow" style={{ maxHeight: '150px', objectFit: 'cover' }} />
+                                <img src={item.product?.photo} alt={item.product?.nom} className="img-fluid rounded shadow" style={{ maxHeight: '150px', objectFit: 'cover' }} />
                                 <p>Taille : {item.size}</p>
                                 <p>Quantité : 
                                     <button onClick={() => decremente(index)}>-</button> 

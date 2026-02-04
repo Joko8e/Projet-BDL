@@ -2,6 +2,7 @@ const createError = require("../helpers/CreateError.js");
 const CommandeModel = require("../models/Commande.Model.js");
 const ProductModel = require("../models/Product.Model.js");
 const AuthModel = require("../models/User.Model.js");
+const { sendOrderConfirmationEmail } = require("../services/nodemailer.js");
 
 // Création du Post d'une commande
 const createCommande = async (req, res, next) => {
@@ -33,9 +34,6 @@ const createCommande = async (req, res, next) => {
             if (isNaN(quantity) || quantity <= 0) {
                 throw createError(400, `Quantité invalide pour le produit ${product.nom}`);
             }
-            console.log("price", product.price);
-            console.log("qty", item.quantity);
-
             const itemTotalPrice = product.price * quantity;
             totalPrice += itemTotalPrice;
             
@@ -50,6 +48,15 @@ const createCommande = async (req, res, next) => {
             items: commandeItems,
             totalPrice
         });
+        // Envoyer un email de confirmation de commande
+        const user = await AuthModel.findById(userId);
+        // On récupère la commande complète avec les détails des produits pour l'email
+        const fullCommande = await CommandeModel.findById(commande._id).populate('items.product');
+        // Envoyer l'email
+        sendOrderConfirmationEmail(user, fullCommande).catch(err => {
+            console.error("Erreur lors de l'envoi de l'email de confirmation de commande :", err);
+        });
+        
         res.status(201).json(commande);
     } catch (error) {
         next(createError(error.status || 500, error.message, error.details));
