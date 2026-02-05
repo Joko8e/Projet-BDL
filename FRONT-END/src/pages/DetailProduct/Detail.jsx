@@ -76,13 +76,13 @@ const Detail = () => {
 
 
                     {/* Bouton d'action */}
-                    <p
+                    <button
                         className="btn btn-warning btn-lg shadow-sm w-100"
                         disabled={!selectSize}
-                        onClick={() => addPanier({ product, size: selectSize })}
+                        onClick={() => addPanier({ product: product, size: selectSize })}
                     >
                         { selectSize ? "Ajouter au panier" : "Sélectionner une taille" }
-                    </p>
+                    </button>
                 </div>
             </div>
         </div>

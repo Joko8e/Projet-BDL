@@ -3,19 +3,21 @@ import { useContext} from "react";
 import { PanierContext } from "../../utils/context/PanierContext";
 import axiosInstance from "../../utils/axios/axiosInstance";
 import URL from "../../utils/constant/url";
+import { useNavigate } from "react-router-dom";
 
 
 
 const Panier = () => {
     const { panier, totalPrice, incremente, decremente, priceArticleByQuantity, removeArticle, totalArticle, clearPanier } = useContext(PanierContext);
 
+    const navigate = useNavigate();
     const handleCheckout = async () => {
         // Logique pour passer la commande
         try {
             // payload sert à structurer les données de la commande
             const payload = {
                 items: panier.map(item => ({
-                    product: item._id,
+                    product: item.product._id,
                     quantity: item.quantite,
                 })),
             };
@@ -31,24 +33,24 @@ const Panier = () => {
             console.log(error.message);
         }
     };
-
+    
     return (
         <section>
             {panier.length > 0 ?
                 <>
                     <div style={styles.root}>
-                        {panier.map((product, index) => (
-                            <div key={ product._id || index} style={{ border: "1px solid black", margin: "10px", padding: "10px" }}>
-                                <h3>{product.name}</h3>
-                                <p>Prix unitaire : {product.price} €</p>
-                                <img src={product.photo} alt={product.name} className="img-fluid rounded shadow" style={{ maxHeight: '150px', objectFit: 'cover' }} />
-                                <p>Taille : {product.size}</p>
+                        {panier.map((item, index) => (
+                            <div key={ item._id || index} style={{ border: "1px solid black", margin: "10px", padding: "10px" }}>
+                                <h3>{item.product?.nom}</h3>
+                                <p>Prix unitaire : {item.product?.price} €</p>
+                                <img src={item.product?.photo} alt={item.product?.nom} className="img-fluid rounded shadow" style={{ maxHeight: '150px', objectFit: 'cover' }} />
+                                <p>Taille : {item.size}</p>
                                 <p>Quantité : 
                                     <button onClick={() => decremente(index)}>-</button> 
-                                    {product.quantite} 
+                                    {item.quantite} 
                                     <button onClick={() => incremente(index)}>+</button>
                                 </p>
-                                <p>Prix total pour cet article : {priceArticleByQuantity(product.price, product.quantite)} €</p>
+                                <p>Prix total pour cet article : {priceArticleByQuantity(item.product?.price, item.quantite)} €</p>
                                 <button onClick={() => removeArticle(index)} className="btn btn-warning">Supprimer cet article</button>
                             </div>
                         ))}

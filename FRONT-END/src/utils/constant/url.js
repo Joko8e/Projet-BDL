@@ -18,7 +18,7 @@ const URL = {
     POST_COMMANDE: '/api/commande/post',
     GET_ALL_COMMANDE: '/api/commande/get',
     GET_COMMANDE_BY_USER: '/api/commande/get',
-    UPDATE_COMMANDE: '/api/commande/put',
+    UPDATE_COMMANDE_STATUS: '/api/commande/update',
     DELETE_COMMANDE: '/api/commande/delete',
 
     POST_USER: '/api/user/register',
