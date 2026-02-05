@@ -4,7 +4,8 @@ import { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import URL from '../../utils/constant/url'
 import axiosInstance from '../../utils/axios/axiosInstance.js'
-
+import { animate, createScope, splitText, stagger } from 'animejs';
+import { useRef } from 'react'
 
 const Home = () => {
 
@@ -12,16 +13,42 @@ const Home = () => {
     // const [loading, setLoading] = useState(true) sert à afficher un loader pendant le chargement des données
     const [loading, setLoading] = useState(true);
 
+    const root = useRef(null);
+    const scope = useRef(null);
+    const [rotations, setRotations] = useState(0);
+
     useEffect(() => {
         getAllProduct()
     }, [])
 
+    useEffect(() => {
+        console.log('test');
+        scope.current = createScope({ root }).add(self => {
+            const { words } = splitText('h1', {
+                words: { wrap: 'clip' },
+            })
+
+            const anime = animate(words, {
+                y: [
+                    { to: ['100%', '0%'] },
+                    { to: '-100%', delay: 900, ease: 'in(3)' }
+                ],
+                duration: 950,
+                ease: 'out(3)',
+                delay: stagger(100),
+                loop: true,
+            })
+        })
+        return () => scope.current.revert()
+    }, [])
+
+
     const getAllProduct = async () => {
         try {
             setLoading(true)
-            const [{ data, status }] = await Promise.all ([
+            const [{ data, status }] = await Promise.all([
                 axiosInstance.get(URL.GET_ALL_PRODUIT),
-            new Promise((resolve) => setTimeout(resolve, 500)) // Simule un délai de 500ms])
+                new Promise((resolve) => setTimeout(resolve, 500)) // Simule un délai de 500ms])
             ])
             if (status === 200) {
                 setAllProduct(data)
@@ -34,23 +61,27 @@ const Home = () => {
         }
 
         if (loading) {
-        return (
-            <div className="text-center my-5">
-                {/* Spinner Bootstrap standard */}
-                <div className="spinner-border text-primary" role="status">
-                    <span className="visually-hidden">Chargement...</span>
+            return (
+                <div className="text-center my-5">
+                    {/* Spinner Bootstrap standard */}
+                    <div className="spinner-border text-primary" role="status">
+                        <span className="visually-hidden">Chargement...</span>
+                    </div>
+                    <p className="mt-3">Chargement des produits...</p>
                 </div>
-                <p className="mt-3">Chargement des produits...</p>
-            </div>
-        )}
+            )
+        }
 
     }
 
 
     return (
-        <div className='container my-5'>
+        <div ref={root} className='container my-5'>
 
-            <h1 className="text-center mb-4">BALL DON'T LIE</h1>
+            <div className="large centered row">
+                <h1 className="text-xl">BALL DON'T LIE</h1>
+            </div>
+            <div className="small row"></div>
 
             <p className="lead text-muted text-center mb-5">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Magnam exercitationem minima dolore reiciendis debitis! Tenetur maxime numquam dicta perspiciatis tempora sunt dolorem saepe cumque. Quasi non similique possimus ipsum harum?</p>
 
@@ -65,17 +96,17 @@ const Home = () => {
                 {allProduct.map(item => (
                     <div key={item._id} className="col card h-100 text-center p-3">
                         <div className="card h-100 shadow-sm"> {/* h-100 garantit que toutes les cartes ont la même hauteur */}
-                            <img 
-                                src={item.photo} 
-                                className="card-img-top" 
-                                alt={item.nom} 
-                                style={{ height: '300px', objectFit: 'cover' }} 
-                                // Style inline pour une meilleure gestion de l'image et objectFit: 'cover' pour éviter la déformation
+                            <img
+                                src={item.photo}
+                                className="card-img-top"
+                                alt={item.nom}
+                                style={{ height: '300px', objectFit: 'cover' }}
+                            // Style inline pour une meilleure gestion de l'image et objectFit: 'cover' pour éviter la déformation
                             />
                             <div className="card-body d-flex flex-column">
                                 <h5 className="card-title mb-1">{item.nom}</h5>
                                 <h6 className="card-subtitle mb-2 text-muted">{item.modele}</h6>
-                                <p className="card-text fw-bold mt-auto">{item.price} €</p> 
+                                <p className="card-text fw-bold mt-auto">{item.price} €</p>
                                 {/* mt-auto pousse le prix vers le bas */}
                             </div>
                             <div className="card-footer bg-white border-0">
@@ -87,7 +118,7 @@ const Home = () => {
                     </div>
                 ))}
 
-                
+
             </div>
         </div>
 
