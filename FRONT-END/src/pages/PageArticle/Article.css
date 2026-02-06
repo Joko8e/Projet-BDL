@@ -1,0 +1,128 @@
+:root {
+  --hex-black-1: #000000;
+  --hex-green-1: #f0fff4;
+  --hex-green-6: #22543d;
+}
+
+.article-content {
+  font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  line-height: 1.6;
+  color: #333;
+  max-width: 800px; /* C'est ici qu'on gère la largeur du texte */
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.article-content h1 {
+  font-size: 2.5rem;
+  color: var(--hex-green-6);
+  margin-bottom: 1.5rem;
+  border-bottom: 3px solid var(--hex-green-1);
+  padding-bottom: 0.5rem;
+}
+
+.article-content h2::before {
+  content: '';
+  display: inline-block;
+  width: 8px;
+  height: 1.5rem;
+  background-color: var(--hex-green-6);
+  margin-right: 12px;
+  border-radius: 4px;
+}
+
+.article-content h2 {
+  font-size: 1.6rem;
+  color: var(--hex-green-6);
+  margin-top: 2.5rem;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+}
+
+
+#layout-dialog {
+  --overlay-alpha: 100%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  z-index: 1000;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100dvh;
+  max-width: 100%;
+  max-height: 100%;
+  border: none;
+  background: transparent;
+  pointer-events: none;
+  background-color: color-mix(in srgb, var(--hex-black-1), transparent var(--overlay-alpha));
+}
+
+#layout-dialog[open] {
+  --overlay-alpha: 40%;
+  pointer-events: auto;
+}
+
+#layout-dialog::backdrop {
+  background: transparent;
+}
+
+#layout-dialog .item {
+  position: relative;
+  visibility: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  text-align: left;
+  width: 22rem;
+  height: 14.5rem;
+  padding: 2rem;
+  border-radius: 1rem;
+  border: 1px solid var(--hex-green-6);
+  font-size: 1rem;
+  color: var(--hex-green-6);
+  background-color: var(--hex-green-1);
+}
+
+#layout-dialog[open] .item {
+  visibility: visible;
+}
+
+#layout-dialog .item h2 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  will-change: font-size;
+  text-wrap: nowrap;
+}
+
+#layout-dialog .item h3 {
+  position: absolute;
+  top: 2.9rem;
+  right: 2rem;
+}
+
+#layout-usage-animate-modal-dialog .item {
+  cursor: pointer;
+}
+
+#layout-usage-animate-modal-dialog .item.is-open {
+  visibility: hidden;
+}
+
+#layout-usage-animate-modal-dialog .item p {
+  text-align: left;
+  display: none;
+}
+
+#layout-dialog .item p {
+  padding-top: 1rem;
+  border-top: 1px solid currentColor;  
+}
+
+#layout-dialog[open] .item p {
+  display: block;
+}

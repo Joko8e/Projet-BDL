@@ -1,7 +1,7 @@
 const ENV = require("../config/Env.js");
 const createError = require("../helpers/CreateError.js");
 const AuthModel = require("../models/User.Model.js");
-const sendEmail = require("../services/nodemailer.js");
+const { sendEmail } = require("../services/nodemailer.js");
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 

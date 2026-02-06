@@ -23,6 +23,7 @@ import Detail from './pages/DetailProduct/Detail';
 import Panier from './pages/PagePanier/Panier';
 import ProfilUser from './pages/DetailUser/ProfilUser';
 import VerifyEmail from './pages/VerifyEmail/VerifyEmail';
+import Article from './pages/PageArticle/Article';
 
 //// ADMIN
 import Dashboard from './admin/pageDashboard/Dashboard';
@@ -62,6 +63,7 @@ function App() {
           <Route path='cgv' element={<CGV />} />
           <Route path='mentionLeg' element={<MentionsLegale/>}/>
           <Route path='detail/:idProduct' element={<Detail />} />
+          <Route path='article' element={<Article />} />
           <Route path='verify/:token' element={<VerifyEmail/>}/>
       </Route>
         
