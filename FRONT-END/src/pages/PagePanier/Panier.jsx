@@ -1,9 +1,10 @@
 import React from "react";
-import { useContext} from "react";
+import { useContext } from "react";
 import { PanierContext } from "../../utils/context/PanierContext";
 import axiosInstance from "../../utils/axios/axiosInstance";
 import URL from "../../utils/constant/url";
 import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 
 
@@ -33,62 +34,109 @@ const Panier = () => {
             console.log(error.message);
         }
     };
-    
+
     return (
-        <section>
-            {panier.length > 0 ?
-                <>
-                    <div style={styles.root}>
+        <section className="container py-5" style={{ minHeight: '80vh' }}>
+            <h1 className="text-center mb-5 fw-bold" style={{ color: "#552583" }}>MON PANIER</h1>
+
+            {panier.length > 0 ? (
+                <div className="row g-4">
+                    {/* LISTE DES ARTICLES (Gauche) */}
+                    <div className="col-lg-8">
                         {panier.map((item, index) => (
-                            <div key={ item._id || index} style={{ border: "1px solid black", margin: "10px", padding: "10px" }}>
-                                <h3>{item.product?.nom}</h3>
-                                <p>Prix unitaire : {item.product?.price} €</p>
-                                <img src={item.product?.photo} alt={item.product?.nom} className="img-fluid rounded shadow" style={{ maxHeight: '150px', objectFit: 'cover' }} />
-                                <p>Taille : {item.size}</p>
-                                <p>Quantité : 
-                                    <button onClick={() => decremente(index)}>-</button> 
-                                    {item.quantite} 
-                                    <button onClick={() => incremente(index)}>+</button>
-                                </p>
-                                <p>Prix total pour cet article : {priceArticleByQuantity(item.product?.price, item.quantite)} €</p>
-                                <button onClick={() => removeArticle(index)} className="btn btn-warning">Supprimer cet article</button>
+                            <div key={item._id || index} className="card mb-3 shadow-sm border-0">
+                                <div className="card-body">
+                                    <div className="row align-items-center text-center text-md-start">
+                                        {/* Image */}
+                                        <div className="col-md-2 mb-3 mb-md-0">
+                                            <img src={item.product?.photo} alt={item.product?.nom} className="img-fluid rounded" style={{ height: '80px', objectFit: 'cover' }} />
+                                        </div>
+
+                                        {/* Détails */}
+                                        <div className="col-md-4">
+                                            <h5 className="mb-1">{item.product?.nom}</h5>
+                                            <p className="text-muted small mb-0">Taille : <span className="badge bg-light text-dark">{item.size}</span></p>
+                                        </div>
+
+                                        {/* Quantité */}
+                                        <div className="col-md-3 my-3 my-md-0">
+                                            <div className="d-flex justify-content-center justify-content-md-start align-items-center">
+                                                <button className="btn btn-sm btn-outline-secondary px-2" onClick={() => decremente(index)}>-</button>
+                                                <span className="mx-3 fw-bold">{item.quantite}</span>
+                                                <button className="btn btn-sm btn-outline-secondary px-2" onClick={() => incremente(index)}>+</button>
+                                            </div>
+                                        </div>
+
+                                        {/* Prix & Poubelle */}
+                                        <div className="col-md-3 d-flex flex-column align-items-center align-items-md-end">
+                                            <span className="fw-bold mb-2">{priceArticleByQuantity(item.product?.price, item.quantite)} €</span>
+                                            <button onClick={() => removeArticle(index)} className="btn btn-link text-danger p-0" title="Supprimer">
+                                                <i className="fas fa-trash-alt"></i> Supprimer
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         ))}
                     </div>
-                    <div>
-                        <h2>Prix total du panier : {totalPrice} €</h2>
-                        <button className="btn btn-warning" onClick={handleCheckout}>Passer la commande ({totalArticle()} articles)</button>
+
+                    {/* RÉCAPITULATIF (Droite) */}
+                    <div className="col-lg-4">
+                        <div className="card shadow border-0" style={{ backgroundColor: "#f8f9fa" }}>
+                            <div className="card-body">
+                                <h4 className="card-title mb-4 fw-bold">Résumé</h4>
+                                <div className="d-flex justify-content-between mb-2">
+                                    <span>Articles ({totalArticle()})</span>
+                                    <span>{totalPrice} €</span>
+                                </div>
+                                <div className="d-flex justify-content-between mb-4">
+                                    <span>Livraison</span>
+                                    <span className="text-success">Gratuite</span>
+                                </div>
+                                <hr />
+                                <div className="d-flex justify-content-between mb-4 h5 fw-bold">
+                                    <span>Total</span>
+                                    <span style={{ color: "#552583" }}>{totalPrice} €</span>
+                                </div>
+                                <button className="btn w-100 py-3 fw-bold"
+                                    onClick={handleCheckout}
+                                    style={{ backgroundColor: "#552583", color: "#FDB927" }}>
+                                    COMMANDER
+                                </button>
+                                <Link to="/" className="btn btn-link w-100 mt-2 text-decoration-none" style={{ color: "#552583" }}>
+                                    Continuer mes achats
+                                </Link>
+                            </div>
+                        </div>
                     </div>
-                </>
-                :
-                <>
-                    <div>
-                        <h2>Votre panier est vide</h2>
-                    </div>
-                    <div>
-                        {totalPrice && (
-                            <h2>Prix total du panier : {totalPrice} €</h2>
-                        )}    
-                    </div>
-                </>}
+                </div>
+            ) : (
+                <div className="text-center py-5">
+                    <i className="fas fa-shopping-basket fa-4x mb-4" style={{ color: "#dee2e6" }}></i>
+                    <h2 className="text-muted">Votre panier est vide</h2>
+                    <Link to="/" className="btn mt-3 px-5 py-2" style={{ backgroundColor: "#552583", color: "#FDB927" }}>
+                        Retour à la boutique
+                    </Link>
+                </div>
+            )}
         </section>
     )
 }
 
 const styles = {
-  root: {
-    display: 'flex',
-  },
-  quantity: {
-    display: 'flex',
-    justifyContent: 'center',
-  },
-  title: {
-    fontSize: '0.7em'
-  },
-  click: {
-    cursor: 'pointer',
-  }
+    root: {
+        display: 'flex',
+    },
+    quantity: {
+        display: 'flex',
+        justifyContent: 'center',
+    },
+    title: {
+        fontSize: '0.7em'
+    },
+    click: {
+        cursor: 'pointer',
+    }
 };
 
 export default Panier;

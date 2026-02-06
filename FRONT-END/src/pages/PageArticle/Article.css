@@ -1,128 +1,152 @@
+/* --- 1. VARIABLES & BASE --- */
 :root {
-  --hex-black-1: #000000;
-  --hex-green-1: #f0fff4;
-  --hex-green-6: #22543d;
+  --lakers-purple: #552583;
+  --lakers-gold: #FDB927;
+  --bg-overlay: rgba(0, 0, 0, 0.6);
 }
 
 .article-content {
-  font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  font-family: 'Segoe UI', Roboto, sans-serif;
   line-height: 1.6;
   color: #333;
-  max-width: 800px; /* C'est ici qu'on gère la largeur du texte */
+  max-width: 900px;
   margin: 0 auto;
   padding: 2rem;
 }
 
+/* --- 2. TITRES --- */
 .article-content h1 {
   font-size: 2.5rem;
-  color: var(--hex-green-6);
-  margin-bottom: 1.5rem;
-  border-bottom: 3px solid var(--hex-green-1);
+  color: var(--lakers-purple);
+  border-bottom: 4px solid var(--lakers-gold);
   padding-bottom: 0.5rem;
-}
-
-.article-content h2::before {
-  content: '';
-  display: inline-block;
-  width: 8px;
-  height: 1.5rem;
-  background-color: var(--hex-green-6);
-  margin-right: 12px;
-  border-radius: 4px;
+  text-transform: uppercase;
+  font-weight: bold;
+  margin-bottom: 1.5rem;
 }
 
 .article-content h2 {
   font-size: 1.6rem;
-  color: var(--hex-green-6);
+  color: var(--lakers-purple);
   margin-top: 2.5rem;
-  margin-bottom: 1rem;
   display: flex;
   align-items: center;
 }
 
+.article-content h2::before {
+  content: '';
+  width: 8px;
+  height: 1.5rem;
+  background-color: var(--lakers-gold);
+  margin-right: 12px;
+  border-radius: 4px;
+}
 
-#layout-dialog {
-  --overlay-alpha: 100%;
-  overflow: hidden;
+/* --- 3. LA GRILLE (BOUTONS) --- */
+/* --- 3. LA GRILLE (BOUTONS) --- */
+.layout-container .item {
+  background-color: var(--lakers-purple);
+  color: var(--lakers-gold);
+  border: 2px solid var(--lakers-gold);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  
+  /* Centrage du titre dans le bouton */
   display: flex;
   align-items: center;
   justify-content: center;
+  min-height: 100px; 
+}
+
+.layout-container .item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+  background-color: #6d32a3; /* Un violet légèrement plus clair au survol */
+}
+
+/* On s'assure que le titre reste visible et propre */
+.layout-container .item h2 {
+  font-size: 1.2rem;
+  margin: 0;
+  text-transform: uppercase;
+  font-weight: bold;
+  color: var(--lakers-gold);
+}
+
+/* On enlève la barre dorée (::before) uniquement sur les titres des boutons */
+.layout-container .item h2::before {
+  display: none;
+}
+
+/* CACHE UNIQUEMENT LE TEXTE <P> DANS LA GRILLE */
+.layout-container .item p {
+  display: none !important;
+}
+
+/* Cache l'élément d'origine pendant que la modal l'anime */
+.item.is-open {
+  visibility: hidden;
+}
+
+/* --- 4. LA MODAL (DIALOG) --- */
+#layout-dialog {
   position: fixed;
   z-index: 1000;
   top: 0;
   left: 0;
   width: 100vw;
-  height: 100dvh;
-  max-width: 100%;
-  max-height: 100%;
+  height: 100vh;
   border: none;
   background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   pointer-events: none;
-  background-color: color-mix(in srgb, var(--hex-black-1), transparent var(--overlay-alpha));
 }
 
 #layout-dialog[open] {
-  --overlay-alpha: 40%;
   pointer-events: auto;
+  background-color: var(--bg-overlay);
+  backdrop-filter: blur(4px); /* Petit effet de flou en arrière-plan */
 }
 
-#layout-dialog::backdrop {
-  background: transparent;
-}
-
+/* L'item à l'intérieur de la modal */
 #layout-dialog .item {
-  position: relative;
-  visibility: hidden;
+  visibility: hidden; /* Géré par animejs (is-open) */
+  background-color: var(--lakers-purple);
+  color: var(--lakers-gold);
+  border: 4px solid var(--lakers-gold);
+  border-radius: 1.5rem;
+  padding: 2.5rem;
+  width: 90%;
+  max-width: 500px;
+  height: auto;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  justify-content: flex-start;
-  text-align: left;
-  width: 22rem;
-  height: 14.5rem;
-  padding: 2rem;
-  border-radius: 1rem;
-  border: 1px solid var(--hex-green-6);
-  font-size: 1rem;
-  color: var(--hex-green-6);
-  background-color: var(--hex-green-1);
 }
 
 #layout-dialog[open] .item {
   visibility: visible;
 }
 
-#layout-dialog .item h2 {
-  font-size: 2rem;
-  margin-bottom: 1rem;
-  will-change: font-size;
-  text-wrap: nowrap;
-}
-
-#layout-dialog .item h3 {
-  position: absolute;
-  top: 2.9rem;
-  right: 2rem;
-}
-
-#layout-usage-animate-modal-dialog .item {
-  cursor: pointer;
-}
-
-#layout-usage-animate-modal-dialog .item.is-open {
-  visibility: hidden;
-}
-
-#layout-usage-animate-modal-dialog .item p {
-  text-align: left;
-  display: none;
-}
-
-#layout-dialog .item p {
-  padding-top: 1rem;
-  border-top: 1px solid currentColor;  
-}
-
+/* REND LE TEXTE VISIBLE DANS LA MODAL */
 #layout-dialog[open] .item p {
-  display: block;
+  display: block !important;
+  margin-top: 1.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(253, 185, 39, 0.3);
+  color: #fff; /* Texte blanc pour lisibilité */
+  text-align: left;
+}
+
+#layout-dialog .item h2 {
+  font-size: 1.8rem;
+  margin: 0;
+  color: var(--lakers-gold);
+}
+
+#layout-dialog .item h2::before {
+    display: none; /* On enlève la barre dorée du h2 dans la modal */
 }
