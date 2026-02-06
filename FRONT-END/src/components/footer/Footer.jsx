@@ -13,6 +13,9 @@ const Footer = () => {
             <p className="mx-auto p-2">
                 <Link to='mentionLeg'>Mentions Légales</Link>
             </p>
+            <p className="mx-auto p-2">
+                <Link to='contact'>Contact</Link>
+            </p>
             
         </footer>
     )

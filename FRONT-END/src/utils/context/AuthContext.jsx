@@ -69,10 +69,11 @@ export const AuthProvider = ({ children }) => {
         setIsLoading(true);
         try {
             // on récupère les donnnées d'authentification dans le stockage local
-            const userData = await localStorage.getItem("auth");
+            const userData = localStorage.getItem("auth");
+            
 
             // on met a l'état de l'utilisateur avec les données récupérées
-            setUser(userData ? JSON.parse(userData).user : null);
+            setUser(userData ? JSON.parse(userData) : null);
         } catch (error) {
             console.log(error.message);
         } finally {

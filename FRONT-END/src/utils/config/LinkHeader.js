@@ -4,7 +4,7 @@ const HEADER_LINK = [
     { label: "commande", path: "/historique", auth: "user" },
     { label: "Profil", path: "/profil", auth: "user" },
     { label: "contact", path: "/contact" },
-    { label: "Article", path: "/article" }
+    { label: "Article", path: "/article" },
 ]
 
 export default HEADER_LINK;

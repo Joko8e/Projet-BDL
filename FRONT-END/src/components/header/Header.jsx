@@ -39,7 +39,7 @@ const Header = () => {
                     <span className="navbar-toggler-icon"></span>
                 </button>
                 <div className="collapse navbar-collapse" id="navbarNavDropdown">
-                    <ul className="navbar-nav mx-auto">
+                    <ul className="navbar-nav mx-auto" style={{color:"#FDB927"}}>
                         {visibleLinks.map((link, index) => (
                             <li className="nav-item" key={index}>
                                 <Link className="nav-link" to={link.path}>
@@ -47,7 +47,12 @@ const Header = () => {
                                 </Link>
                             </li>
                         ))}
-                        <li>
+                        <li className="nav-item">
+                            <Link className="nav-link" to='/article'>
+                                Article
+                            </Link>
+                        </li>
+                        <li className="nav-item">
                             <Link className="nav-link" to='/panier'>
                                 Panier ({totalArticle()})
                             </Link>
@@ -56,6 +61,8 @@ const Header = () => {
 
                     {/* bouton de connexion / deconnexion */}
                     <ul className="navbar-nav ms-auto">
+                        {console.log('test',isAuthenticated)};
+                        
                         {isAuthenticated ? (
                             <li className="nav-item">
                                 <button onClick={logout} className="btn btn-outline-danger">Déconnexion</button>

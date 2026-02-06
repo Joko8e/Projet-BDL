@@ -27,10 +27,11 @@ const Sign = () => {
                 <form onSubmit={handleSubmit}>
                     {/* Champ Email */}
                     <div className="mb-3">
-                        <label className="form-label fw-semibold">Email</label>
+                        <label htmlFor="email" className="form-label fw-semibold">Email</label>
                         <input
                             type="email"
                             name="email"
+                            id="email"
                             className="form-control form-control-lg"
                             placeholder="nom@exemple.com"
                             onChange={handleChange}
@@ -40,9 +41,10 @@ const Sign = () => {
 
                     {/* Champ Password */}
                     <div className="mb-4">
-                        <label className="form-label fw-semibold">Mot de passe</label>
+                        <label htmlFor="password" className="form-label fw-semibold">Mot de passe</label>
                         <input
                             type="password"
+                            id="password"
                             name="password"
                             className="form-control form-control-lg"
                             placeholder="••••••••"

@@ -48,6 +48,7 @@ const Register = () => {
                                 <span className="input-group-text">
                                     <i className={field.icon}></i>
                                 </span>
+                                {/* <label className="" htmlFor={field.id}>{field.name}</label> */}
                                 <input
                                     type={field.type}
                                     name={field.name}
