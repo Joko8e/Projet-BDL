@@ -4,7 +4,7 @@ import { AuthContext } from "../../utils/context/AuthContext";
 import { PanierContext } from "../../utils/context/PanierContext";
 import { Link } from "react-router-dom";
 import HEADER_LINK from "../../utils/config/LinkHeader";
-import LogoBDL from "../../utils/img/logo.png";
+import Logo from "../../utils/img/logo.png";
 
 const Header = () => {
 
@@ -60,7 +60,7 @@ const Header = () => {
                             }}
                         >
                             <img
-                                src={LogoBDL}
+                                src={Logo}
                                 alt="Logo BDL"
                                 style={{
                                     height: "110px", // Légèrement réduit pour le mode sticky
