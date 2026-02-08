@@ -65,22 +65,69 @@ const sendOrderConfirmationEmail = async (user, commande) => {
     to: user.email,
     subject: `Confirmation de votre commande #${commande._id}`,
     html: `
-      <div style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
-        <h2>Merci pour votre commande, ${user.prenom} !</h2>
-        <p>Nous avons bien reçu votre commande et elle est en cours de traitement.</p>
+      <div style="background-color: #f4f4f4; padding: 20px; font-family: 'Segoe UI', Helvetica, Arial, sans-serif;">
+    <table align="center" border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px; background-color: #ffffff; border-radius: 20px; overflow: hidden; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">
         
-        <div style="background-color: #f8f9fa; padding: 15px; border-radius: 5px;">
-          <h3>Récapitulatif de la commande :</h3>
-          <ul>
-            ${orderDetails}
-          </ul>
-          <hr />
-          <p><strong>Total payé : ${commande.totalPrice} €</strong></p>
-        </div>
+        <tr>
+            <td align="center" style="padding: 40px 20px; background-color: #552583;">
+                <h1 style="color: #FDB927; margin: 0; font-size: 28px; letter-spacing: 2px; text-transform: uppercase; font-weight: 900;">
+                    Ball Don't Lie
+                </h1>
+                <div style="height: 4px; width: 40px; background-color: #FDB927; margin-top: 10px;"></div>
+            </td>
+        </tr>
 
-        <p>Vous recevrez un email dès que votre colis sera expédié.</p>
-        <p>Cordialement,<br />L'équipe E-commerce</p>
-      </div>
+        <tr>
+            <td style="padding: 40px 30px;">
+                <h2 style="color: #333; margin-top: 0;">Merci pour votre commande, ${user.prenom} !</h2>
+                <p style="color: #666; font-size: 16px; line-height: 1.6;">
+                    Le match commence ! Nous avons bien reçu votre commande. Nos équipes préparent vos articles pour une expédition rapide.
+                </p>
+
+                <div style="background-color: #f9f9f9; border-radius: 15px; padding: 20px; margin-top: 30px; border: 1px solid #eeeeee;">
+                    <h3 style="color: #552583; margin-top: 0; font-size: 18px; text-transform: uppercase;">Récapitulatif</h3>
+                    
+                    <table width="100%" cellpadding="0" cellspacing="0" style="color: #444; font-size: 15px;">
+                        ${orderDetails}
+                    </table>
+                    
+                    <hr style="border: 0; border-top: 1px solid #ddd; margin: 20px 0;" />
+                    
+                    <table width="100%">
+                        <tr>
+                            <td style="font-size: 18px; font-weight: bold; color: #333;">Total payé</td>
+                            <td align="right" style="font-size: 22px; font-weight: 900; color: #552583;">
+                                ${commande.totalPrice} €
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+
+                <table width="100%" style="margin-top: 30px;">
+                    <tr>
+                        <td align="center">
+                            <a href="http://ton-site.com/account/orders" 
+                               style="background-color: #552583; color: #FDB927; padding: 15px 30px; text-decoration: none; border-radius: 50px; font-weight: bold; display: inline-block; text-transform: uppercase; letter-spacing: 1px;">
+                               Suivre ma commande
+                            </a>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+
+        <tr>
+            <td style="padding: 30px; background-color: #f8f8f8; text-align: center; color: #999; font-size: 12px;">
+                <p style="margin: 0;">Vous recevrez un email dès que votre colis sera expédié.</p>
+                <p style="margin: 10px 0 0;">© 2026 Ball Don't Lie - Le terrain vous appartient.</p>
+                <div style="margin-top: 15px;">
+                    <a href="#" style="color: #552583; text-decoration: none; font-weight: bold;">Support</a> | 
+                    <a href="#" style="color: #552583; text-decoration: none; font-weight: bold;">Conditions de vente</a>
+                </div>
+            </td>
+        </tr>
+    </table>
+</div>
     `,
   });
 }

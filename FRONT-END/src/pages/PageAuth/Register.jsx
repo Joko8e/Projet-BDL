@@ -92,7 +92,7 @@ const Register = () => {
 
                                 return (
                                     <div className={isHalfWidth ? "col-md-6" : "col-12"} key={index}>
-                                        <label className="form-label small fw-bold text-uppercase text-muted px-1">
+                                        <label htmlFor={field.id} className="form-label small fw-bold text-uppercase text-muted px-1">
                                             {field.name}
                                         </label>
                                         <div className="input-group">
