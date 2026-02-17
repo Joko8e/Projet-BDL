@@ -73,12 +73,13 @@ const Sign = () => {
                     <form onSubmit={handleSubmit}>
                         {/* Champ Email avec icône */}
                         <div className="mb-3">
-                            <label className="form-label small fw-bold text-uppercase text-muted">Email</label>
+                            <label htmlFor="email" className="form-label small fw-bold text-uppercase text-muted">Email</label>
                             <div className="input-group">
                                 <span className="input-group-text"><i className="bi bi-envelope"></i></span>
                                 <input
                                     type="email"
                                     name="email"
+                                    id="email"
                                     className="form-control form-control-lg bg-light"
                                     placeholder="nom@exemple.com"
                                     onChange={handleChange}
@@ -90,7 +91,7 @@ const Sign = () => {
                         {/* Champ Mot de passe avec icône */}
                         <div className="mb-4">
                             <div className="d-flex justify-content-between">
-                                <label className="form-label small fw-bold text-uppercase text-muted">Mot de passe</label>
+                                <label htmlFor="password" className="form-label small fw-bold text-uppercase text-muted">Mot de passe</label>
                                 <Link to="/forgot-password" size="sm" className="small text-decoration-none text-muted">Oublié ?</Link>
                             </div>
                             <div className="input-group">
@@ -98,6 +99,7 @@ const Sign = () => {
                                 <input
                                     type="password"
                                     name="password"
+                                    id="password"
                                     className="form-control form-control-lg bg-light"
                                     placeholder="••••••••"
                                     onChange={handleChange}
