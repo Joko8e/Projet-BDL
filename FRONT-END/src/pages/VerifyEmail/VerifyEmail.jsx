@@ -36,10 +36,22 @@ const VerifyEmail = () => {
         }, 4000);
 
       } catch (error) {
-        // On récupère le message d'erreur du backend s'il existe
-        const errorMsg = error.response?.data?.message || "Une erreur est survenue lors de la vérification.";
-        setMessage(errorMsg);
-        setIsSuccess(false);
+        // ANALYSE DE L'ERREUR :
+        // Si le backend dit "Déjà vérifié" ou si MongoDB est déjà à true, 
+        // on ne doit pas afficher un message d'erreur rouge.
+        
+        const errorMsg = error.response?.data?.message || "";
+        
+        if (errorMsg.includes("déjà vérifié") || errorMsg.includes("already verified")) {
+          // Si c'est juste un problème de "déjà fait", on traite ça comme un succès
+          setMessage("Votre compte est déjà vérifié !");
+          setIsSuccess(true);
+          setTimeout(() => { navigate('/sign'); }, 3000);
+        } else {
+          // Si c'est une VRAIE erreur (token expiré, mauvais token)
+          setMessage(errorMsg || "Lien invalide ou expiré.");
+          setIsSuccess(false);
+        }
       } finally {
         setLoading(false);
       }
