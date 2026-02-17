@@ -54,7 +54,7 @@ const Historique = () => {
                 <div className="card border-0 shadow-sm p-5 text-center" style={{ borderRadius: "20px" }}>
                     <i className="bi bi-bag-x display-1 text-light mb-3"></i>
                     <h4 className="fw-bold">Vous n'avez pas encore de commande</h4>
-                    <Link to="/boutique" className="btn btn-warning mt-3 px-4 rounded-pill fw-bold">DÉCOUVRIR NOS PRODUITS</Link>
+                    <Link to="/" className="btn btn-warning mt-3 px-4 rounded-pill fw-bold">DÉCOUVRIR NOS PRODUITS</Link>
                 </div>
             ) : (
                 <div className="row justify-content-center">

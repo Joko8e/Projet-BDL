@@ -40,6 +40,7 @@ app.use(
   cors({
     origin: [ENV.WEB_APP_URL, ENV.DOMAINE_URL],
     credentials: true,
+    allowedHeaders: ['Content-Type', 'Authorization'], // Autorise les en-têtes nécessaires pour les requêtes avec cookies
   })
 );
 
