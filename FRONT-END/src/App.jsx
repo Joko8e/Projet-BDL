@@ -55,7 +55,8 @@ function App() {
 
   return (
     <AnimatePresence mode='wait' initial={false} >
-      <Routes location={location} key={location.pathname}>
+      <Routes location={location} key={location.pathname}> 
+        {/* route location sert à animer les transitions entre les pages */}
         {/* Routes Front-end Public */}
       <Route path='/' element={<Template/>}>
           <Route index element={<Home />} />
