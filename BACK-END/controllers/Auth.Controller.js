@@ -86,7 +86,7 @@ const login = async (req, res, next) => {
 
     // on retire le mot de passe de la réponse
     const { password, ...rest } = user._doc;
-    res.cookie("access_token", token, { httpOnly: true })
+    res.cookie("access_token", token, { httpOnly: true, secure: true, sameSite: "None", maxAge: 24 * 60 * 60 * 1000 }) //secure: true → pour les cookies en HTTPS, sameSite: "None" → pour permettre les cookies cross-site, maxAge: 24h
       .status(200).json(rest);
   } catch (error) {
      next(createError(error.status || 500, error.message, error.details));
