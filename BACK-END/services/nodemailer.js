@@ -23,7 +23,7 @@ const transporter = nodemailer.createTransport({
 const sendEmail = async (user, verifieToken) => {
     // On crée un lien de vérification que l'utilisateur pourra cliquer
     // Le ${verifieToken} sera remplacé par le vrai token généré précédemment
-    const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:5173';
+    const frontendUrl = ENV.DOMAINE_URL || ENV.WEB_APP_URL;
     const verificationLink = `${frontendUrl}/verify/${verifieToken}`;
 
     // Maintenant, on va utiliser notre configuration nodemailer pour envoyer l'email
