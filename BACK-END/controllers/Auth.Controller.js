@@ -82,7 +82,7 @@ const login = async (req, res, next) => {
     }
 
     // Génération d'un token JWT
-    const token = jwt.sign({ id: user._id }, ENV.JWT_SECRET, { expiresIn: ENV.JWT_EXPIRES_IN });
+    const token = jwt.sign({ id: user._id }, ENV.JWT_SECRET, { expiresIn: ENV.JWT_EXPIRES_IN || '1d' });
 
     // on retire le mot de passe de la réponse
     const { password, ...rest } = user._doc;
