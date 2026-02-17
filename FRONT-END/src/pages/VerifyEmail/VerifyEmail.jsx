@@ -1,4 +1,5 @@
-import axiosInstance from '../../utils/axios/axiosInstance';
+// On importe tout ce dont on a besoin pour faire marcher notre composant 🛠️
+import axios from 'axios'
 import React, { useState, useEffect } from 'react'
 import { useParams, Link } from "react-router-dom";
 // On crée notre composant qui va gérer la vérification des emails ✉️
@@ -24,7 +25,7 @@ const VerifyEmail = () => {
       try {
         // On envoie une requête au serveur pour vérifier l'email
         // C'est comme envoyer une lettre et attendre la réponse 📬
-        const { data } = await axiosInstance.put(`/auth/verify/${token}`)
+        const { data } = await axios.put(`/api/auth/verify/${token}`)
         setMessage(data.message);
       } catch ({ response }) {
         const { message } = response.data
