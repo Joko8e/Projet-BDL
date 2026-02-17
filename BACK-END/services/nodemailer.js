@@ -24,7 +24,7 @@ const sendEmail = async (user, verifieToken) => {
     // On crée un lien de vérification que l'utilisateur pourra cliquer
     // Le ${verifieToken} sera remplacé par le vrai token généré précédemment
     const frontendUrl = (process.env.FRONTEND_URL || ENV.WEB_APP_URL).replace(/\/+$/, ''); // Supprime les éventuels slashs à la fin de l'URL
-    const verificationLink = `${frontendUrl}/verify/${verifieToken}`;
+    const verificationLink = `https://projet-bdl.vercel.app/verify/${verifieToken}`;
 
     // Maintenant, on va utiliser notre configuration nodemailer pour envoyer l'email
     // C'est comme envoyer une lettre, mais en version numérique! 📧
