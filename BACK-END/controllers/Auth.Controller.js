@@ -43,6 +43,15 @@ const verifyEmail = async (req, res, next) => {
     // C'est comme quand le videur vérifie si ton billet est authentique! 🕵️
     const decoded = jwt.verify(token, ENV.JWT_SECRET);
 
+    const user = await AuthModel.findById(decoded.id);
+
+    if (!user) {
+      return res.status(404).json({ message: 'Utilisateur non trouvé.' });
+    }
+
+    if (user.isVerified) {
+      return res.status(400).json({ message: 'Utilisateur déjà vérifié.' });
+    }
 
     // Maintenant on active le compte de l'utilisateur en mettant isVerified à true
 
@@ -51,7 +60,7 @@ const verifyEmail = async (req, res, next) => {
     );
 
     // on redirecte vers l'application front-end avec un paramètre indiquant le succès
-    return res.redirect(`${ENV.WEB_APP_URL}/login?verified=true`)
+    return res.status(200).json({ message: 'Email vérifié avec succès.'});
 
   } catch (error) {
   // vous pouviez aussi utiliser la fonciton next() si jamais.
