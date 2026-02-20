@@ -3,14 +3,16 @@ Ce projet a été conçu de A & Z par moi et a présenter devant un Jury lors de
 Il représente un site de e-commerce fictif autour du basketball
 
 Ce projet est composé de deux parties :
-
 🖥️ Back-end : API Node.js / Express / MongoDB
 💻 Front-end : React (Vite)
 ⚙️ Configuration du Back-end
+
+
 📂 1. Accéder au dossier du back-end
 Ouvre un terminal et exécute :
 
 cd back-end
+
 🧾 2. Créer le fichier .env
 Crée un fichier nommé .env à la racine du dossier back-end, puis ajoute les variables suivantes :
 
@@ -38,6 +40,7 @@ DOMAINE_URL=http://localhost:5173
 Toujours dans le dossier back-end, exécute :
 
 npm install
+
 🚀 4. Lancer le serveur back-end
 npm start
 Le serveur s'exécutera sur :
@@ -46,10 +49,13 @@ Le serveur s'exécutera sur :
 💻 Configuration du Front-end
 📂 1. Accéder au dossier du front-end
 cd front-end
+
 📦 2. Installer les dépendances du front-end
 npm install
+
 🚀 3. Lancer le serveur front-end
 npm run dev
+
 Le front-end s'exécutera sur :
 👉 http://localhost:5173
 
