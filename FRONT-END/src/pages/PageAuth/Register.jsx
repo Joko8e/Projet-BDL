@@ -107,6 +107,11 @@ const Register = () => {
                                                 className="form-control bg-light"
                                                 onChange={handleChange}
                                                 required
+                                                {...(field.name === "password" ? {
+                                                    pattern: ".{12,}",
+                                                    title: "Le mot de passe doit contenir au moins 12 caractères."
+                                                } :
+                                                {})}
                                             />
                                         </div>
                                     </div>
