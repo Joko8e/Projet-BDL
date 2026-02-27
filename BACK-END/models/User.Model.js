@@ -17,7 +17,7 @@ const User = mongoose.Schema(
     },
     password:{
       type: String,
-      // minLength: 12,
+      minLength: 12,
       required: true, 
     },
     adresse:{

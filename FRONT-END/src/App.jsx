@@ -65,6 +65,7 @@ function App() {
           <Route path='mentionLeg' element={<MentionsLegale/>}/>
           <Route path='detail/:idProduct' element={<Detail />} />
           <Route path='article' element={<Article />} />
+          <Route path='panier' element={<Panier />} />
           <Route path='verify/:token' element={<VerifyEmail/>}/>
       </Route>
         
@@ -80,7 +81,7 @@ function App() {
       <Route element={<PrivateRoute/>}>
         <Route path='/' element={<Template/>}>
             <Route path='historique' element={<Historique />} />
-            <Route path='panier' element={<Panier />} />
+            
             <Route path='profil' element={<ProfilUser />} />
         </Route>
       </Route>

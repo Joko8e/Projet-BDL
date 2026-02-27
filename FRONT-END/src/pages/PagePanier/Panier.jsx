@@ -1,6 +1,7 @@
 import React from "react";
 import { useContext } from "react";
 import { PanierContext } from "../../utils/context/PanierContext";
+import { AuthContext } from "../../utils/context/AuthContext";
 import axiosInstance from "../../utils/axios/axiosInstance";
 import URL from "../../utils/constant/url";
 import { useNavigate } from "react-router-dom";
@@ -10,6 +11,20 @@ import { Link } from "react-router-dom";
 
 const Panier = () => {
     const { panier, totalPrice, incremente, decremente, priceArticleByQuantity, removeArticle, totalArticle, clearPanier } = useContext(PanierContext);
+    const { user } = useContext(AuthContext);
+
+    // Si l'utilisateur n'est pas connecté, on rend l'interface de panier mais on affiche un message lui demandant de se connecter pour passer commander
+    if (!user) {
+        return (
+            <section className="container py-5" style={{ minHeight: '80vh' }}>
+                <h1 className="text-center mb-5 fw-bold" style={{ color: "#552583" }}>MON PANIER</h1>
+                <p className="text-center">Veuillez vous connecter pour passer une commande.</p>
+                <div className="text-center">
+                    <Link to="/sign" className="btn btn-primary">Se connecter</Link>
+                </div>
+            </section>
+        );
+    }
 
     const navigate = useNavigate();
     const handleCheckout = async () => {
