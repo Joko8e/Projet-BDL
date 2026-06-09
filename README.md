@@ -1,5 +1,5 @@
 # Projet-BDL
-Ce projet a été conçu de A & Z par moi et a présenter devant un Jury lors de ma soutenance de fin de Cursus.
+Ce projet a été conçu de A & Z par moi et présenter devant un Jury lors de ma soutenance de fin de Cursus.
 Il représente un site de e-commerce fictif autour du basketball
 
 Ce projet est composé de deux parties :
